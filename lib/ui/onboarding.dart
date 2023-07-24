@@ -54,6 +54,7 @@ class _OnboardingState extends State<Onboarding> {
                 image:demo_data[index].image,
                 title: demo_data[index].title,
                 description: demo_data[index].description,
+
               ),
               ),
             ),
