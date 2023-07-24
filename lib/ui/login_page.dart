@@ -3,6 +3,8 @@ import 'package:project/components/signInButton.dart';
 import 'package:project/components/textfield.dart';
 import 'package:project/constants/colors.dart';
 
+import '../auth/signUserIn.dart';
+
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
 
@@ -67,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
 
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.03,
+                height: MediaQuery.of(context).size.height * 0.019,
               ),
 
               //forgot pass
@@ -84,11 +86,14 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
 
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.024,
+              ),
               //signin
-              SignInButton(),
+              SignInButton(onTap: signUserIn,),
               //continue with
 
-              //google sinin
+              //google signin
 
               //not a user?
             ],
