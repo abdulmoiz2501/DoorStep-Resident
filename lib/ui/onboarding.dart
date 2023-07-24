@@ -62,7 +62,7 @@ class _OnboardingState extends State<Onboarding> {
               children: [
                 ...List.generate(demo_data.length, (index) => Padding(
                   padding: const EdgeInsets.only(right:4),
-                  child: DotIndicator(isActive: index==_pageIndex, height: height, width: width,),
+                  child: DotIndicator(isActive: index==_pageIndex, height: height, width: width),
                 )),
                 Spacer(),
                 SizedBox(
