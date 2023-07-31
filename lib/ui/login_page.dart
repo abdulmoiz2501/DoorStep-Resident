@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/components/signInButton.dart';
+import 'package:project/components/square_tile.dart';
 import 'package:project/components/textfield.dart';
 import 'package:project/constants/colors.dart';
 
@@ -133,18 +134,27 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
               ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.044,
+              ),
 
               //google signin
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    'lib/assets/images/google.png',
-                    height: MediaQuery.of(context).size.height * 0.065,
-                  ),
+                  SquareTile(imagePath: 'lib/assets/images/google.png'),
                 ],
+
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.044,
               ),
 
               //not a user?
+
+
+
+
             ],
           ),
         ),
