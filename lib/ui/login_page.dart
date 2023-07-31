@@ -24,9 +24,10 @@ class _LoginPageState extends State<LoginPage> {
       body: SafeArea(
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.1,
+                height: MediaQuery.of(context).size.height * 0.04,
               ),
               //logo
               Icon(
@@ -135,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.044,
+                height: MediaQuery.of(context).size.height * 0.024,
               ),
 
               //google signin
@@ -144,17 +145,35 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   SquareTile(imagePath: 'lib/assets/images/google.png'),
                 ],
-
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.044,
+                height: MediaQuery.of(context).size.height * 0.03,
               ),
 
               //not a user?
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Not a user?",
 
-
-
-
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.height * 0.020,
+                      color: kTextColor,
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.015,
+                  ),
+                  Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.height * 0.022,
+                      color: kAccentColor,
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

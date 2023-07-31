@@ -17,7 +17,7 @@ class SquareTile extends StatelessWidget {
       ),
       child: Image.asset(
         imagePath,
-        height: MediaQuery.of(context).size.height * 0.065,
+        height: MediaQuery.of(context).size.height * 0.045,
       ),
     );
   }
