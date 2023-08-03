@@ -1,22 +1,30 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/components/signInButton.dart';
 import 'package:project/components/square_tile.dart';
 import 'package:project/components/textfield.dart';
 import 'package:project/constants/colors.dart';
 
-import '../auth/signUserIn.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
-
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
-
   @override
   State<LoginPage> createState() => _LoginPageState();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  void signUserIn() async{
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: emailController.text,
+      password: passwordController.text,
+    );
+  }
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,8 +63,8 @@ class _LoginPageState extends State<LoginPage> {
               //username
 
               MyTextField(
-                controlller: widget.usernameController,
-                hintText: 'Username',
+                controlller: widget.emailController,
+                hintText: 'Email',
                 obscureText: false,
               ),
 
@@ -95,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               //signin
               SignInButton(
-                onTap: signUserIn,
+                onTap: widget.signUserIn,
               ),
               //continue with
 

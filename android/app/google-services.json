@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "685794116042",
+    "project_id": "fypuni-ac053",
+    "storage_bucket": "fypuni-ac053.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685794116042:android:a2a782f2f6483aa70b8f33",
+        "android_client_info": {
+          "package_name": "com.example.project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "685794116042-d3j48vaj4nrc1qrr8bjdchop61o4929t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4qe8hbdFZWNFGEUupXui1mWS6XKmR5rI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "685794116042-d3j48vaj4nrc1qrr8bjdchop61o4929t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "685794116042-9oth5pvqt048kf4a9u8gurukuhhead69.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.project"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
