@@ -5,8 +5,8 @@ class SignInButton extends StatelessWidget {
 
 
   final Function()? onTap;
-
-  const SignInButton({super.key, this.onTap});
+  final String text;
+  const SignInButton({super.key, this.onTap, required this.text});
 
 
 
@@ -24,7 +24,7 @@ class SignInButton extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            'Sign In',
+            text,
             style: TextStyle(
               color: kPrimaryLightColor,
               fontSize: MediaQuery.of(context).size.height * 0.024,
