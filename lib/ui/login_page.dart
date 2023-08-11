@@ -1,10 +1,10 @@
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/components/signInButton.dart';
 import 'package:project/components/square_tile.dart';
-import 'package:project/components/textfield.dart';
 import 'package:project/constants/colors.dart';
 
 import '../components/progress_dialog.dart';
@@ -20,6 +20,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
+  final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   @override
@@ -30,6 +31,10 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
   void signUserIn() async{
+
+    final isValid = formKey.currentState!.validate();
+    if(!isValid) return;
+
     ///Loading
     // Show the progress dialog before performing the task.
     ProgressDialogWidget.show(context, "Please wait...");
@@ -125,162 +130,237 @@ class _LoginPageState extends State<LoginPage> {
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.04,
-                ),
-                //logo
-                Icon(
-                  Icons.lock,
-                  size: 50,
-                  color: kAccentColor,
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.1,
-                ),
-                //welcomeback
-                Text(
-                  'Welcome back, you\'ve been missed!',
-                  style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.height * 0.029,
-                    fontWeight: FontWeight.bold,
-                    color: kTextColor,
+            child: Form(
+              key: formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.04,
                   ),
-                ),
-
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.03,
-                ),
-
-                //username
-
-                MyTextField(
-                  controlller: emailController,
-                  hintText: 'Email',
-                  obscureText: false,
-                ),
-
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.02,
-                ),
-
-                //password
-                MyTextField(
-                  controlller: passwordController,
-                  hintText: 'Password',
-                  obscureText: true,
-                ),
-
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.019,
-                ),
-
-                //forgot pass
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width * 0.065),
-                  child: Row(
-                    children: [
-                      Text(
-                        'Forgot Password?',
-                        style: TextStyle(color: kTextColor),
-                      ),
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.end,
+                  //logo
+                  Icon(
+                    Icons.lock,
+                    size: 50,
+                    color: kAccentColor,
                   ),
-                ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.1,
+                  ),
+                  //welcomeback
+                  Text(
+                    'Welcome back, you\'ve been missed!',
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.height * 0.029,
+                      fontWeight: FontWeight.bold,
+                      color: kTextColor,
+                    ),
+                  ),
 
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.024,
-                ),
-                //signin
-                SignInButton(
-                  text: 'Sign In',
-                  onTap: signUserIn,
-                ),
-                //continue with
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.03,
+                  ),
 
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.044,
-                ),
+                  //username
 
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width * 0.025),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Divider(
-                          thickness: 0.2,
-                          color: Colors.grey[400],
+                  // MyTextField(
+                  //   controlller: emailController,
+                  //   hintText: 'Email',
+                  //   obscureText: false,
+                  //   emailValidate: true,
+                  //   passValidate: false,
+                  //   confirmPassValidate: false,
+                  // ),
+                  Padding(
+                    padding:  EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.065),
+                    child: TextFormField(
+                      obscureText: false,
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: kWhite,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.grey.shade400,
+                          ),
+                        ),
+                        fillColor: kTextBoxColor,
+                        filled: true,
+                        hintText: 'Email',
+                        hintStyle: TextStyle(
+                          color:kHintTextColor,
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal:
-                                MediaQuery.of(context).size.width * 0.025),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter an email';
+                        }
+
+                        if (!EmailValidator.validate(value)) {
+                          return 'Enter a valid email';
+                        }
+
+                        return null;
+                      },
+                    ),
+                  ),
+
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.02,
+                  ),
+
+                  //password
+                  // MyTextField(
+                  //   controlller: passwordController,
+                  //   hintText: 'Password',
+                  //   obscureText: true,
+                  //   emailValidate: false,
+                  //   passValidate: true,
+                  //   confirmPassValidate: false,
+                  // ),
+                  Padding(
+                    padding:  EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.065),
+                    child: TextFormField(
+                      obscureText: true,
+                      controller: passwordController,
+                      keyboardType: TextInputType.visiblePassword,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: kWhite,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.grey.shade400,
+                          ),
+                        ),
+                        fillColor: kTextBoxColor,
+                        filled: true,
+                        hintText: 'Password',
+                        hintStyle: TextStyle(
+                          color:kHintTextColor,
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value != null && value.length < 6) {
+                          return 'Enter 6 characters (minimum)';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.019,
+                  ),
+
+                  //forgot pass
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: MediaQuery.of(context).size.width * 0.065),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Forgot Password?',
+                          style: TextStyle(color: kTextColor),
+                        ),
+                      ],
+                      mainAxisAlignment: MainAxisAlignment.end,
+                    ),
+                  ),
+
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.024,
+                  ),
+                  //signin
+                  SignInButton(
+                    text: 'Sign In',
+                    onTap: signUserIn,
+                  ),
+                  //continue with
+
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.044,
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: MediaQuery.of(context).size.width * 0.025),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Divider(
+                            thickness: 0.2,
+                            color: Colors.grey[400],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.025),
+                          child: Text(
+                            'Or continue with ',
+                            style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.height * 0.019,
+                              color: kTextColor,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Divider(
+                            thickness: 0.2,
+                            color: Colors.grey[400],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.024,
+                  ),
+
+                  //google signin
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SquareTile(imagePath: 'lib/assets/images/google.png'),
+                    ],
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.03,
+                  ),
+
+                  //not a user?
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Not a user?",
+
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.height * 0.020,
+                          color: kTextColor,
+                        ),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.015,
+                      ),
+                      GestureDetector(
+                        onTap: widget.onSignUpClicked,
                         child: Text(
-                          'Or continue with ',
+                          'Sign Up',
                           style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.height * 0.019,
-                            color: kTextColor,
+                            fontSize: MediaQuery.of(context).size.height * 0.022,
+                            color: kAccentColor,
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: Divider(
-                          thickness: 0.2,
-                          color: Colors.grey[400],
-                        ),
-                      ),
                     ],
                   ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.024,
-                ),
-
-                //google signin
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SquareTile(imagePath: 'lib/assets/images/google.png'),
-                  ],
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.03,
-                ),
-
-                //not a user?
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Not a user?",
-
-                      style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.height * 0.020,
-                        color: kTextColor,
-                      ),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.015,
-                    ),
-                    GestureDetector(
-                      onTap: widget.onSignUpClicked,
-                      child: Text(
-                        'Sign Up',
-                        style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.height * 0.022,
-                          color: kAccentColor,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
