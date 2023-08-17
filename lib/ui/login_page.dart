@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:project/components/signInButton.dart';
 import 'package:project/components/square_tile.dart';
 import 'package:project/constants/colors.dart';
+import 'package:project/services/auth_service.dart';
 
 import '../components/progress_dialog.dart';
 
@@ -221,37 +222,7 @@ class _LoginPageState extends State<LoginPage> {
                   //   passValidate: true,
                   //   confirmPassValidate: false,
                   // ),
-                  Padding(
-                    padding:  EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.065),
-                    child: TextFormField(
-                      obscureText: true,
-                      controller: passwordController,
-                      keyboardType: TextInputType.visiblePassword,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: kWhite,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.grey.shade400,
-                          ),
-                        ),
-                        fillColor: kTextBoxColor,
-                        filled: true,
-                        hintText: 'Password',
-                        hintStyle: TextStyle(
-                          color:kHintTextColor,
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value != null && value.length < 6) {
-                          return 'Enter 6 characters (minimum)';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
+                  passwordField(context),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.019,
                   ),
@@ -325,7 +296,10 @@ class _LoginPageState extends State<LoginPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SquareTile(imagePath: 'lib/assets/images/google.png'),
+                      SquareTile(
+                        imagePath: 'lib/assets/images/google.png',
+                        onTap: () => AuthService().signInWithGoogle(),
+                      ),
                     ],
                   ),
                   SizedBox(
@@ -366,5 +340,39 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  Padding passwordField(BuildContext context) {
+    return Padding(
+                  padding:  EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.065),
+                  child: TextFormField(
+                    obscureText: true,
+                    controller: passwordController,
+                    keyboardType: TextInputType.visiblePassword,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: kWhite,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.grey.shade400,
+                        ),
+                      ),
+                      fillColor: kTextBoxColor,
+                      filled: true,
+                      hintText: 'Password',
+                      hintStyle: TextStyle(
+                        color:kHintTextColor,
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value != null && value.length < 6) {
+                        return 'Enter 6 characters (minimum)';
+                      }
+                      return null;
+                    },
+                  ),
+                );
   }
 }
