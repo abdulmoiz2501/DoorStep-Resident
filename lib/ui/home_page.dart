@@ -6,6 +6,7 @@ import 'package:project/constants/colors.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 import '../components/drawer.dart';
+import '../services/signout_user.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -13,15 +14,12 @@ class HomePage extends StatelessWidget {
   final user = FirebaseAuth.instance.currentUser!;
 
   ///sign user out method
-  void signUserOut() async {
-    await FirebaseAuth.instance.signOut();
 
-    await GoogleSignIn().signOut();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //backgroundColor: kScaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
         title: const Text('Home Page'),
@@ -33,7 +31,14 @@ class HomePage extends StatelessWidget {
         ],
       ),
       drawer: MyDrawer(
-        onProfileTap: () {},
+        onHomeTap: () {
+          Navigator.pop(context);
+          //Navigator.pushNamed(context, '/home');
+        },
+        onProfileTap: () {
+          Navigator.pop(context);
+          Navigator.pushNamed(context, '/profile');
+        },
         onSettingTap: () {},
         onLogoutTap: signUserOut,
       ),

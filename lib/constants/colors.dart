@@ -7,6 +7,7 @@ const kAccentColor = Color(0xFF1811A7);
 const kWhite = Colors.white;
 const kTextBoxColor = Color(0xFFF9F1FE);
 const kHintTextColor = Color(0xFF8C8C8C);
+const kScaffoldBackgroundColor = Color(0xFFE0E0E0);
 
 class MyColors {
   static Map<int, Color> grey = {
