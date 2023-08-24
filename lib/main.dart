@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/ui/auth_page.dart';
+import 'package:project/ui/edit_profile_page.dart';
+import 'package:project/ui/filling_profile_details.dart';
 import 'package:project/ui/home_page.dart';
 import 'package:project/ui/onboarding.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,6 +30,8 @@ class MyApp extends StatelessWidget {
         '/auth': (context) =>  AuthPage(),
         '/home': (context) => HomePage(),
         '/profile': (context) =>  ProfilePage(),
+        '/editProfile': (context) =>  EditProfilePage(),
+        '/fillProfile': (context) =>  FillProfilePage(),
       }
     );
   }

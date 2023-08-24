@@ -1,37 +1,43 @@
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/components/signInButton.dart';
 import 'package:project/components/square_tile.dart';
 import 'package:project/constants/colors.dart';
-import 'package:project/services/auth_service.dart';
 
 import '../components/progress_dialog.dart';
+import '../services/auth_service.dart';
 
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   final Function()? onSignUpClicked;
-  LoginPage({Key? key, required this.onSignUpClicked}) : super(key: key);
+  RegisterPage({Key? key, required this.onSignUpClicked}) : super(key: key);
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
+
 
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
   @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+    confirmPasswordController.dispose();
 
     super.dispose();
   }
-  void signUserIn() async{
+
+  void signUserUp() async{
 
     final isValid = formKey.currentState!.validate();
     if(!isValid) return;
@@ -41,12 +47,16 @@ class _LoginPageState extends State<LoginPage> {
     ProgressDialogWidget.show(context, "Please wait...");
 
 
-    ///Sign user in
+    ///Sign user up
     try{
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
+      if(passwordController.text.trim() == confirmPasswordController.text.trim()) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
+        );
+      }else{
+        //show error passwords dont match
+      }
       // Task completed. Hide the progress dialog.
       ProgressDialogWidget.hide(context);
 
@@ -118,7 +128,32 @@ class _LoginPageState extends State<LoginPage> {
           ..hideCurrentSnackBar()
           ..showSnackBar(snackBar);
       }
+
+      else if(e.code == 'email-already-in-use')
+        {
+          final snackBar = SnackBar(
+            /// need to set following properties for best effect of awesome_snackbar_content
+            elevation: 0,
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.transparent,
+            content: AwesomeSnackbarContent(
+              title: 'On Snap!',
+              message:
+              'The email you entered is already in use',
+
+              /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+              contentType: ContentType.failure,
+            ),
+          );
+
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(snackBar);
+        }
     }
+
+
+
 
   }
 
@@ -150,7 +185,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   //welcomeback
                   Text(
-                    'Welcome back, you\'ve been missed!',
+                    'Welcome to Doorstep!',
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.height * 0.029,
                       fontWeight: FontWeight.bold,
@@ -253,32 +288,75 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                   ),
+
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.02,
+                  ),
+
+                  //confirm pass
+                  // MyTextField(
+                  //   controlller: confirmPasswordController,
+                  //   hintText: 'Confirm Password',
+                  //   obscureText: true,
+                  //   emailValidate: false,
+                  //   passValidate: false,
+                  //   confirmPassValidate: true,
+                  //
+                  // ),
+              Padding(
+                padding:  EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.065),
+                child: TextFormField(
+                  obscureText: true,
+                  controller: confirmPasswordController,
+                  keyboardType: TextInputType.visiblePassword,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: kWhite,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade400,
+                      ),
+                    ),
+                    fillColor: kTextBoxColor,
+                    filled: true,
+                    hintText: 'Confirm Password',
+                    hintStyle: TextStyle(
+                      color:kHintTextColor,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Empty';
+                    }
+
+                    if (value != passwordController.text) {
+                      return 'Passwords don\'t match';
+                    }
+
+                    if (value.length < 6) {
+                      return 'Enter 6 characters (minimum)';
+                    }
+
+                    return null;
+                  },
+                ),
+              ),
+
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.019,
                   ),
 
                   //forgot pass
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: MediaQuery.of(context).size.width * 0.065),
-                    child: Row(
-                      children: [
-                        Text(
-                          'Forgot Password?',
-                          style: TextStyle(color: kTextColor),
-                        ),
-                      ],
-                      mainAxisAlignment: MainAxisAlignment.end,
-                    ),
-                  ),
 
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.024,
                   ),
                   //signin
                   SignInButton(
-                    text: 'Sign In',
-                    onTap: signUserIn,
+                    text: 'Sign Up',
+                    onTap: signUserUp,
                   ),
                   //continue with
 
@@ -300,7 +378,7 @@ class _LoginPageState extends State<LoginPage> {
                         Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal:
-                                  MediaQuery.of(context).size.width * 0.025),
+                              MediaQuery.of(context).size.width * 0.025),
                           child: Text(
                             'Or continue with ',
                             style: TextStyle(
@@ -327,7 +405,7 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SquareTile(
-                        imagePath: 'lib/assets/images/google.png',
+                          imagePath: 'lib/assets/images/google.png',
                         onTap: () => AuthService().signInWithGoogle(),
                       ),
                     ],
@@ -341,7 +419,7 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Not a user?",
+                        "Already have an account?",
 
                         style: TextStyle(
                           fontSize: MediaQuery.of(context).size.height * 0.020,
@@ -354,7 +432,7 @@ class _LoginPageState extends State<LoginPage> {
                       GestureDetector(
                         onTap: widget.onSignUpClicked,
                         child: Text(
-                          'Sign Up',
+                          'Sign In',
                           style: TextStyle(
                             fontSize: MediaQuery.of(context).size.height * 0.022,
                             color: kAccentColor,
