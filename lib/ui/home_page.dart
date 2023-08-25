@@ -39,7 +39,10 @@ class HomePage extends StatelessWidget {
           Navigator.pop(context);
           Navigator.pushNamed(context, '/profile');
         },
-        onSettingTap: () {},
+        onSettingTap: () {
+          Navigator.pop(context);
+          Navigator.pushNamed(context, '/settings');
+        },
         onLogoutTap: signUserOut,
       ),
       body: Row(

@@ -6,6 +6,7 @@ import 'package:project/ui/home_page.dart';
 import 'package:project/ui/onboarding.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:project/ui/profile_page.dart';
+import 'package:project/ui/settings_page.dart';
 import 'firebase_options.dart';
 import 'ui/login_page.dart';
 
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         '/profile': (context) =>  ProfilePage(),
         '/editProfile': (context) =>  EditProfilePage(),
         '/fillProfile': (context) =>  FillProfilePage(),
+        '/settings': (context) =>  SettingsPage(),
       }
     );
   }

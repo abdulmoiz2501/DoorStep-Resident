@@ -43,7 +43,8 @@ class _ProfilePageState extends State<ProfilePage> {
           //Navigator.pushNamed(context, '/profile');
         },
         onSettingTap: () {
-
+          Navigator.pop(context);
+          Navigator.pushNamed(context, '/settings');
         },
         onLogoutTap: signUserOut,
       ),
