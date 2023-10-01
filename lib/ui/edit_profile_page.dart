@@ -154,7 +154,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     return 'Field is Empty';
                   }
                   return null;
-                }),
+                }
+                ),
           ),
         ),
       ],

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project/components/profile_page_tab.dart';
 import 'package:project/components/progress_dialog.dart';
 import 'package:project/components/signInButton.dart';
+import 'package:project/ui/change_password.dart';
 
 import '../components/drawer.dart';
 import '../constants/colors.dart';
@@ -19,6 +20,10 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   void editProfilePage() async {
     await Navigator.pushNamed(context, '/editProfile');
+    setState(() {});
+  }
+  void changePasswordPage() async {
+    await Navigator.pushNamed(context, '/changePassword');
     setState(() {});
   }
 
@@ -251,7 +256,7 @@ class _ProfilePageState extends State<ProfilePage> {
               endingIcon: Icons.arrow_forward_ios,
             ),
             ProfilePageTab(
-              onTap: editProfilePage,
+              onTap: changePasswordPage,
               text: "Change Password",
               leadingIcon: Icons.account_circle_outlined,
               endingIcon: Icons.arrow_forward_ios,

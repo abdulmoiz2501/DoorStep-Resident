@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:project/themes/dark_theme.dart';
+import 'package:project/themes/light_theme.dart';
 import 'package:project/ui/auth_page.dart';
+import 'package:project/ui/change_password.dart';
 import 'package:project/ui/edit_profile_page.dart';
 import 'package:project/ui/filling_profile_details.dart';
 import 'package:project/ui/home_page.dart';
@@ -24,6 +27,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      //theme: lightTheme,
+      //darkTheme: darkTheme,
       home:  AuthPage(),
       routes: {
         '/login': (context) =>  LoginPage(onSignUpClicked: (){}),
@@ -34,6 +39,7 @@ class MyApp extends StatelessWidget {
         '/editProfile': (context) =>  EditProfilePage(),
         '/fillProfile': (context) =>  FillProfilePage(),
         '/settings': (context) =>  SettingsPage(),
+        '/changePassword': (context) =>  ChangePassword(),
       }
     );
   }
