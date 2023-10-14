@@ -1,14 +1,14 @@
 import 'dart:typed_data';
 
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:project/constants/colors.dart';
-import 'package:project/constants/utils.dart';
-import 'package:project/services/user_model.dart';
+
+import '../constants/colors.dart';
+import '../constants/utils.dart';
+import '../services/user_model.dart';
 
 class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({super.key});
+  EditProfilePage({Key? key}) : super(key: key);
 
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();
@@ -18,6 +18,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final formKey = GlobalKey<FormState>();
   final _fullNameController = TextEditingController();
   final _phoneController = TextEditingController();
+  final _emailController = TextEditingController();
 
   Uint8List? _image;
 
@@ -45,34 +46,32 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: kScaffoldBackgroundColor,
       appBar: AppBar(
+        //leading: IconButton(onPressed: () => Get.back(), icon: const Icon(LineAwesomeIcons.angle_left)),
+        //title: Text(tEditProfile, style: Theme.of(context).textTheme.headline4),
         backgroundColor: kPrimaryColor,
-        title: Text('Edit Profile'),
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.05,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
             children: [
+              // -- IMAGE with ICON
               Stack(
                 children: [
                   _image != null
                       ? CircleAvatar(
-                          radius: MediaQuery.of(context).size.height * 0.08,
-                          backgroundImage: MemoryImage(_image!),
-                        )
+                    radius: MediaQuery.of(context).size.height * 0.08,
+                    backgroundImage: MemoryImage(_image!),
+                  )
                       : CircleAvatar(
-                          radius: MediaQuery.of(context).size.height * 0.1,
-                          backgroundImage:
-                              AssetImage('lib/assets/images/avatar.png'),
-                        ),
+                    radius: MediaQuery.of(context).size.height * 0.1,
+                    backgroundImage:
+                    AssetImage('lib/assets/images/avatar.png'),
+                  ),
                   Positioned(
                     child: IconButton(
                       onPressed: selectImage,
@@ -83,82 +82,124 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   )
                 ],
               ),
+              SizedBox(height: 50),
+              // -- Form Fields
+              Form(
+                child: Column(
+                  children: [
+                    SizedBox(height: 10),
+                    customTextField("Name", _fullNameController,prefixIcon: Icon(Icons.person)),
+                    SizedBox(height: 10),
+                    customTextField("Email", _emailController,prefixIcon: Icon(Icons.email)),
+                    SizedBox(height: 10),
+                    customTextField("Phone", _phoneController,prefixIcon: Icon(Icons.phone)),
+
+                    ///for password including an eye button for viewing pass
+                    // TextFormField(
+                    //   obscureText: true,
+                    //   decoration: InputDecoration(
+                    //     label: const Text('Password'),
+                    //     prefixIcon: const Icon(Icons.fingerprint),
+                    //     suffixIcon: IconButton(
+                    //         icon: const Icon(Icons.remove_red_eye),
+                    //         onPressed: () {}
+                    //     ),
+                    //       border: OutlineInputBorder(),
+                    //       prefixIconColor: kPrimaryColor,
+                    //       floatingLabelStyle: TextStyle(color: kPrimaryColor),
+                    //       focusedBorder: OutlineInputBorder(
+                    //         borderSide: BorderSide(width: 2,color: kPrimaryColor),
+                    //       ),
+                    //   ),
+                    // ),
+
+                    const SizedBox(height: 20),
+                    // -- Form Submit Button
+                    SizedBox(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * 0.07,
+                      child: ElevatedButton(
+                        onPressed: saveProfile,
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: kPrimaryColor,
+                            side: BorderSide.none,
+                            shape: const StadiumBorder()),
+                        child: Text('Save',
+                            style: TextStyle(color: Colors.white)),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+
+                    // -- Created Date and Delete Button
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     const Text.rich(
+                    //       TextSpan(
+                    //         text: 'tJoined',
+                    //         style: TextStyle(fontSize: 12),
+                    //         children: [
+                    //           TextSpan(
+                    //               text: 'tJoinedAt',
+                    //               style: TextStyle(
+                    //                   fontWeight: FontWeight.bold,
+                    //                   fontSize: 12))
+                    //         ],
+                    //       ),
+                    //     ),
+                    //     ElevatedButton(
+                    //       onPressed: () {},
+                    //       style: ElevatedButton.styleFrom(
+                    //           backgroundColor:
+                    //               Colors.redAccent.withOpacity(0.1),
+                    //           elevation: 0,
+                    //           foregroundColor: Colors.red,
+                    //           shape: const StadiumBorder(),
+                    //           side: BorderSide.none),
+                    //       child: const Text('tDelete'),
+                    //     ),
+                    //   ],
+                    // )
+                  ],
+                ),
+              ),
             ],
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.05,
-          ),
-          customTextField("Full Name", _fullNameController, size),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.02,
-          ),
-          customTextField("Phone Number", _phoneController, size),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.02,
-          ),
-
-
-          ElevatedButton(
-            onPressed: saveProfile,
-            child: Text('Save Changes'),
-          ),
-        ],
+        ),
       ),
     );
   }
 
-  Widget customTextField(String title, var controller, Size size,
-      {bool readOnly = false}) {
-    return Column(
-      children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            '         $title',
-            style: TextStyle(
-              fontFamily: 'Circular',
-              fontSize: 15,
-              fontWeight: FontWeight.w700,
-              color: Colors.grey.shade600,
-            ),
+  Widget customTextField(String title, var controller,
+      {bool obscure = false,Icon? prefixIcon,}) {
+    return TextFormField(
+      //readOnly: readOnly,
+        obscureText: obscure,
+        controller: controller,
+        decoration: InputDecoration(
+          label: Text('$title',style: TextStyle(
+            fontFamily: 'Circular',
+            fontSize: 15,
+            fontWeight: FontWeight.w700,
+            color: kTextColor,
+          ),
+          ),
+          prefixIcon: prefixIcon,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          prefixIconColor: kPrimaryColor,
+          floatingLabelStyle: TextStyle(color: kPrimaryColor),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(width: 2,color: kPrimaryColor),
           ),
         ),
-        SizedBox(
-          height: size.height * 0.005,
-        ),
-        Container(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * 0.065),
-            child: TextFormField(
-                readOnly: readOnly,
-                obscureText: false,
-                controller: controller,
-                keyboardType: TextInputType.visiblePassword,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: kWhite,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.grey.shade400,
-                    ),
-                  ),
-                  fillColor: kTextBoxColor,
-                  filled: true,
-                ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Field is Empty';
-                  }
-                  return null;
-                }
-                ),
-          ),
-        ),
-      ],
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Field is Empty';
+          }
+          return null;
+        }
     );
   }
 }

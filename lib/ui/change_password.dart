@@ -48,6 +48,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: kScaffoldBackgroundColor,
       appBar: AppBar(
           //leading: IconButton(onPressed: () => Get.back(), icon: const Icon(LineAwesomeIcons.angle_left)),
           //title: Text(tEditProfile, style: Theme.of(context).textTheme.headline4),
@@ -184,7 +185,9 @@ class _ChangePasswordState extends State<ChangePassword> {
         ),
         ),
         prefixIcon: prefixIcon,
-        border: OutlineInputBorder(),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
         prefixIconColor: kPrimaryColor,
         floatingLabelStyle: TextStyle(color: kPrimaryColor),
         focusedBorder: OutlineInputBorder(

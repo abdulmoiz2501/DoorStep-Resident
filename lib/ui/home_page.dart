@@ -48,10 +48,66 @@ class HomePage extends StatelessWidget {
       body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Center(
-            child: Text('Logged In as ${user.email!}'),
+          // Container(
+          //   child: Text('Logged In as ${user.email!}'),
+          // ),
+          Expanded(
+            child: CustomListTile(
+              icon: Icons.qr_code,
+              title: 'QR CODE',
+              subtitle: 'Generate QR CODE PROMPT',
+              backgroundColor: kAccentColor,
+              onTap: () {
+                Navigator.pushNamed(context, '/qrCodePage');
+              },
+            ),
           ),
         ],
+      ),
+    );
+  }
+}
+class CustomListTile extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final Color backgroundColor;
+  final void Function()? onTap;
+
+
+  CustomListTile({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.backgroundColor,
+    required this.onTap,
+
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: backgroundColor,
+      child: ListTile(
+        leading: Icon(
+          icon,
+          color: Colors.white, // Customize icon color
+        ),
+        title: Text(
+          title,
+          style: TextStyle(
+            color: Colors.white, // Customize text color
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        subtitle: Text(
+          subtitle,
+          style: TextStyle(
+            color: Colors.white, // Customize text color
+          ),
+        ),
+        onTap: onTap,
       ),
     );
   }
