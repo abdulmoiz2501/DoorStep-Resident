@@ -5,6 +5,7 @@ import 'package:project/themes/light_theme.dart';
 import 'package:project/ui/auth_page.dart';
 import 'package:project/ui/change_password.dart';
 import 'package:project/ui/edit_profile_page.dart';
+import 'package:project/ui/example.dart';
 import 'package:project/ui/filling_profile_details.dart';
 import 'package:project/ui/generate_qr.dart';
 import 'package:project/ui/home/home_page.dart';
@@ -25,7 +26,6 @@ void main() async{
     ChangeNotifierProvider(
       create: (context) => UserData(),
       child: MyApp(),
-
     ),
   );
 }
@@ -50,6 +50,8 @@ class MyApp extends StatelessWidget {
         '/settings': (context) =>  SettingsPage(),
         '/changePassword': (context) =>  ChangePassword(),
         '/qrCodePage': (context) =>  QRCodePage(),
+        '/community': (context) =>  Dashboard(),
+
       }
     );
   }
