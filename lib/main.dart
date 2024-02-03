@@ -25,6 +25,7 @@ void main() async{
     ChangeNotifierProvider(
       create: (context) => UserData(),
       child: MyApp(),
+
     ),
   );
 }
