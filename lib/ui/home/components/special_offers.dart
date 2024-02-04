@@ -164,7 +164,7 @@ class BannerWidget extends StatelessWidget {
                           children: <Widget>[
                             Expanded(
                               child: Container(
-                                margin: EdgeInsets.only(right: 15),
+                                margin: EdgeInsets.only(right: 10),
                               ),
                             ),
                           ],

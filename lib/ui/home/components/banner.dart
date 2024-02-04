@@ -38,8 +38,8 @@ class DiscountBanner extends StatelessWidget {
       width: double.infinity,
       margin: const EdgeInsets.only(bottom: 15),
       padding: const EdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 10,
+        horizontal: 15,
+        vertical: 15,
       ),
       decoration: BoxDecoration(
         //color: kScaffoldBackgroundColor,

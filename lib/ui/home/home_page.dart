@@ -25,14 +25,6 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: kScaffoldBackgroundColor,
       appBar: AppBar(
-       // backgroundColor: kPrimaryColor,
-        // title: const Text('Home Page'),
-        // actions: [
-        //   IconButton(
-        //     onPressed: signUserOut,
-        //     icon: Icon(Icons.logout),
-        //   ),
-        // ],
       ),
       drawer: MyDrawer(
         onHomeTap: () {
@@ -59,11 +51,7 @@ class HomePage extends StatelessWidget {
                Categories(),
                SpecialOffers(),
                SizedBox(height: 20),
-
-               //Noticeboard banner
-               //HelpDesk (Complaints and suggestions)
                //Payment?
-               //Social
                //Doorstep homes
 
              ],
