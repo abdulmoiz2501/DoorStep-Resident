@@ -7,6 +7,7 @@ import 'package:project/ui/change_password.dart';
 import 'package:project/ui/edit_profile_page.dart';
 import 'package:project/ui/example.dart';
 import 'package:project/ui/filling_profile_details.dart';
+import 'package:project/ui/gatepass/generate_qr.dart';
 import 'package:project/ui/generate_qr.dart';
 import 'package:project/ui/home/home_page.dart';
 import 'package:project/ui/onboarding.dart';
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
         '/changePassword': (context) =>  ChangePassword(),
         '/qrCodePage': (context) =>  QRCodePage(),
         '/community': (context) =>  Dashboard(),
+        '/generateQR': (context) =>  GenerateGatepass(),
 
       }
     );

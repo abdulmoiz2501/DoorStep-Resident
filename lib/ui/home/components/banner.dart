@@ -7,25 +7,6 @@ import 'package:provider/provider.dart';
 
 import '../../../services/provider.dart';
 
-// class UserProfileWidget extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     var userData = Provider.of<UserData>(context, listen: false);
-//
-//     // Only fetch data if it hasn't been fetched before
-//     if (userData.userName.isEmpty) {
-//       String userUID = FirebaseAuth.instance.currentUser!.uid;
-//       FirebaseFirestore.instance.collection("userProfile").doc(userUID).get().then((snapshot) {
-//         if (snapshot.exists) {
-//           var userName = snapshot['name'];
-//           userData.setUserName(userName);
-//         }
-//       });
-//     }
-//
-//     return Text('User Name: ${userData.userName}');
-//   }
-// }
 class DiscountBanner extends StatelessWidget {
   const DiscountBanner({
     Key? key,

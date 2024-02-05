@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kScaffoldBackgroundColor,
+      //backgroundColor: kAccentColor3,
       appBar: AppBar(
       ),
       drawer: MyDrawer(

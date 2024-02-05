@@ -17,23 +17,35 @@ class Categories extends StatelessWidget {
           text1: 'Access Control',
           text2: 'Gatepass',
           text3: 'Generate',
+          onTap: () {
+            // Navigate to your desired screen
+            Navigator.pushNamed(context, '/generateQR');
+          },
         ),
-        SizedBox(width: 5),
+        SizedBox(width: 4),
         customContainer(
           color: kAccentColor2.withOpacity(0.8),
           imagePath: 'lib/assets/images/Service.png',
           text1: 'Services',
           text2: 'Book',
           text3: 'Book',
+          onTap: () {
+            // Navigate to your desired screen
+            Navigator.pushNamed(context, '/profile');
+          },
 
         ),
-        SizedBox(width: 5),
+        SizedBox(width: 4),
         customContainer(
           color: kAccentColor3.withOpacity(0.8),
           imagePath: 'lib/assets/images/reserve2.png',
           text1: 'Amenities',
           text2: 'Reserve',
           text3: 'Reserve',
+          onTap: () {
+            // Navigate to your desired screen
+            Navigator.pushNamed(context, '/profile');
+          },
         )
       ],
       //SOS
@@ -51,58 +63,62 @@ Widget customContainer({
   required String text1,
   required String text2,
   required String text3,
+  required VoidCallback onTap,
 }) {
-  return Container(
-    height: 150,
-    width: 110,
-    decoration: BoxDecoration(
-      color: color,
-      borderRadius: BorderRadius.circular(15),
-    ),
-    child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 5),
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.grey.shade200.withOpacity(0.5),
-            backgroundImage: AssetImage(imagePath),
-          ),
-          SizedBox(height: 10),
-          Text(
-            text1,
-            style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
-          ),
-          Text(
-            text2,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-          ),
-          SizedBox(height: 10),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.circular(12),
+  return GestureDetector(
+    onTap: onTap,
+    child: Container(
+      height: 150,
+      width: 110,
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 5),
+            CircleAvatar(
+              radius: 20,
+              backgroundColor: Colors.grey.shade200.withOpacity(0.5),
+              backgroundImage: AssetImage(imagePath),
             ),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 8.0,
-                bottom: 8,
-                left: 18,
-                right: 18,
+            SizedBox(height: 10),
+            Text(
+              text1,
+              style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
+            ),
+            Text(
+              text2,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
+            SizedBox(height: 10),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(12),
               ),
-              child: Text(
-                text3,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 8.0,
+                  bottom: 8,
+                  left: 18,
+                  right: 18,
+                ),
+                child: Text(
+                  text3,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     ),
   );
