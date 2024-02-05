@@ -54,6 +54,7 @@ dependencies:
   path_provider: ^2.1.1
   provider: ^6.1.1
   animate_do: ^3.3.2
+  sn_progress_dialog: ^1.1.3
 
 
 

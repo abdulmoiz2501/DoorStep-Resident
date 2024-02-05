@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project/services/provider.dart';
 import 'package:project/themes/dark_theme.dart';
 import 'package:project/themes/light_theme.dart';
+import 'package:project/ui/amenities/amenities.dart';
 import 'package:project/ui/auth_page.dart';
 import 'package:project/ui/change_password.dart';
 import 'package:project/ui/edit_profile_page.dart';
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
         '/qrCodePage': (context) =>  QRCodePage(),
         '/community': (context) =>  Dashboard(),
         '/generateQR': (context) =>  GenerateGatepass(),
+        '/amenities': (context) =>  Reservation(),
 
       }
     );
