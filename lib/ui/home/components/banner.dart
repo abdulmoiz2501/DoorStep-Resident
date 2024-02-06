@@ -4,7 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:provider/provider.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 
+import '../../../constants/colors.dart';
+import '../../../constants/colors.dart';
+import '../../../constants/colors.dart';
 import '../../../services/provider.dart';
 
 class DiscountBanner extends StatelessWidget {
@@ -26,20 +30,46 @@ class DiscountBanner extends StatelessWidget {
         //color: kScaffoldBackgroundColor,
         //borderRadius: BorderRadius.circular(20),
       ),
-      child:  Text.rich(
-        TextSpan(
-          style: TextStyle(color: Colors.black),
-          children: [
+      child:  Row(
+        children: [
+          Text.rich(
             TextSpan(
-              text: "Hey, $userName!",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(color: Colors.black),
+              children: [
+                TextSpan(
+                  text: "Hey, $userName!",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+          Spacer(), // Add Spacer to push AvatarGlow to the end
+          AvatarGlow(
+            glowColor: kAccentColor4,
+            glowRadiusFactor: 0.7,
+            duration: Duration(milliseconds: 1700),
+            repeat: true,
+            animate: true,
+            glowShape: BoxShape.circle,
+            child: MaterialButton(
+              elevation: 3,
+              onPressed: () {},
+              color: kAccentColor,
+              textColor: Colors.white,
+              child: Text(
+                'SOS',
+                style: TextStyle(fontSize: 12),
+              ),
+              padding: EdgeInsets.all(2),
+              shape: CircleBorder(),
+            ),
+          ),
+        ],
+      )
+
     );
   }
 }
