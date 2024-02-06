@@ -11,13 +11,15 @@ import 'components/banner.dart';
 import 'components/categories.dart';
 import 'components/special_offers.dart';
 
+
 class HomePage extends StatelessWidget {
   HomePage({super.key});
 
   final user = FirebaseAuth.instance.currentUser!;
 
   ///sign user out method
-  ///
+
+
 
 
   @override

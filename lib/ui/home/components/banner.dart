@@ -1,17 +1,15 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:project/constants/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:avatar_glow/avatar_glow.dart';
-
-import '../../../constants/colors.dart';
-import '../../../constants/colors.dart';
-import '../../../constants/colors.dart';
 import '../../../services/provider.dart';
 
 class DiscountBanner extends StatelessWidget {
+  _callNumber(String number) async{
+    await FlutterPhoneDirectCaller.callNumber(number);
+  }
   const DiscountBanner({
     Key? key,
   }) : super(key: key);
@@ -56,7 +54,7 @@ class DiscountBanner extends StatelessWidget {
             glowShape: BoxShape.circle,
             child: MaterialButton(
               elevation: 3,
-              onPressed: () {},
+              onPressed: () => _callNumber('15'),
               color: kAccentColor,
               textColor: Colors.white,
               child: Text(
