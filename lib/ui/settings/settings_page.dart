@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../components/drawer.dart';
-import '../components/profile_page_tab.dart';
-import '../components/progress_dialog.dart';
-import '../constants/colors.dart';
-import '../services/signout_user.dart';
+import '../../components/drawer.dart';
+import '../../components/profile_page_tab.dart';
+import '../../components/progress_dialog.dart';
+import '../../constants/colors.dart';
+import '../../services/signout_user.dart';
 
 class SettingsPage extends StatefulWidget {
   SettingsPage({super.key});
@@ -16,9 +16,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  final currentUser = FirebaseAuth.instance.currentUser!;
 
-  String userUID = FirebaseAuth.instance.currentUser!.uid;
 
   void editProfilePage() async {
     await Navigator.pushNamed(context, '/editProfile');

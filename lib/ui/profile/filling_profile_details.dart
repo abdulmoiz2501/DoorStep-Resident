@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project/constants/colors.dart';
 
-import '../components/progress_dialog.dart';
-import '../constants/utils.dart';
-import '../services/user_model.dart';
+import '../../components/progress_dialog.dart';
+import '../../constants/utils.dart';
+import '../../services/user_model.dart';
 
 class FillProfilePage extends StatefulWidget {
   const FillProfilePage({super.key});

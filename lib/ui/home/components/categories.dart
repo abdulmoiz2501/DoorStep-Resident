@@ -31,7 +31,7 @@ class Categories extends StatelessWidget {
           text3: 'Book',
           onTap: () {
             // Navigate to your desired screen
-            Navigator.pushNamed(context, '/amenities');
+            Navigator.pushNamed(context, '/addSurvey');
           },
 
         ),
@@ -44,7 +44,7 @@ class Categories extends StatelessWidget {
           text3: 'Reserve',
           onTap: () {
             // Navigate to your desired screen
-            Navigator.pushNamed(context, '/profile');
+            Navigator.pushNamed(context, '/amenities');
           },
         )
       ],

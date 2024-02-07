@@ -3,9 +3,9 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../constants/colors.dart';
-import '../constants/utils.dart';
-import '../services/user_model.dart';
+import '../../constants/colors.dart';
+import '../../constants/utils.dart';
+import '../../services/user_model.dart';
 
 class EditProfilePage extends StatefulWidget {
   EditProfilePage({Key? key}) : super(key: key);

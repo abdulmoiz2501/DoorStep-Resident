@@ -8,8 +8,8 @@ import 'package:project/components/signInButton.dart';
 import 'package:project/components/square_tile.dart';
 import 'package:project/constants/colors.dart';
 
-import '../components/progress_dialog.dart';
-import '../services/auth_service.dart';
+import '../../components/progress_dialog.dart';
+import '../../services/auth_service.dart';
 
 
 class RegisterPage extends StatefulWidget {

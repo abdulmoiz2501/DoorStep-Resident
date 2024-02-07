@@ -25,7 +25,7 @@ class DiscountBanner extends StatelessWidget {
         vertical: 15,
       ),
       decoration: BoxDecoration(
-        //color: kScaffoldBackgroundColor,
+        color: kScaffoldBackgroundColor,
         //borderRadius: BorderRadius.circular(20),
       ),
       child:  Row(

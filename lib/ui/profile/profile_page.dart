@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:project/components/profile_page_tab.dart';
 import 'package:project/components/progress_dialog.dart';
 import 'package:project/components/signInButton.dart';
-import 'package:project/ui/change_password.dart';
+import 'package:project/ui/auth/change_password.dart';
 import 'package:provider/provider.dart';
 
-import '../components/drawer.dart';
-import '../constants/colors.dart';
-import '../services/provider.dart';
-import '../services/signout_user.dart';
+import '../../components/drawer.dart';
+import '../../constants/colors.dart';
+import '../../services/provider.dart';
+import '../../services/signout_user.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

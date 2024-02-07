@@ -8,7 +8,7 @@ import 'package:project/components/square_tile.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/services/auth_service.dart';
 
-import '../components/progress_dialog.dart';
+import '../../components/progress_dialog.dart';
 
 
 class LoginPage extends StatefulWidget {
