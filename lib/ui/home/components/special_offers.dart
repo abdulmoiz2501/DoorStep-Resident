@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project/constants/colors.dart';
-//import 'package:shop_app/screens/products/products_screen.dart';
-
-import '../../../components/card_model.dart';
 import 'section_title.dart';
 
 class SpecialOffers extends StatefulWidget {
@@ -15,45 +11,56 @@ class SpecialOffers extends StatefulWidget {
 }
 
 class _SpecialOffersState extends State<SpecialOffers> {
+
   List<Map<String, String>> banners = <Map<String, String>>  [
     {
       'name': 'Noticeboard',
       'imagePath': 'lib/assets/images/noticeboard.png',
       'subText': 'Announcements & Notices',
+      'routePath': '/noticeboard',
     },
     {
       'name': 'Helpdesk',
       'imagePath': 'lib/assets/images/helpdesk.png',
       'subText': 'Complaints & Suggestions',
+      'routePath': '/noticeboard',
     },
     {
       'name': 'Social',
       'imagePath': 'lib/assets/images/social.png',
       'subText': 'Connect and socialize',
+      'routePath': '/noticeboard',
+    },
+    {
+      'name': 'Feedback',
+      'imagePath': 'lib/assets/images/feedback.png',
+      'subText': 'Surveys & Polls',
+      'routePath': '/noticeboard',
     },
   ];
   @override
   Widget build(BuildContext context) {
+    final ScrollController _scrollController = ScrollController();
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SectionTitle(
             title: "Community",
-            press: () {
-              Navigator.pushNamed(context, '/community');
-            },
+            scrollController: _scrollController,
           ),
         ),
         SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
+          scrollDirection: Axis.vertical,
           child: SingleChildScrollView(
+            controller: _scrollController,
             child: Column(
               children: [
                 BannerWidget(
                   imagePath: 'lib/assets/images/noticeboard.png',
                   name: 'Noticeboard',
                   subText: 'Announcements & Notices',
+                  routePath: '/noticeboard',
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 // Add more BannerWidgets with different parameters
@@ -61,6 +68,7 @@ class _SpecialOffersState extends State<SpecialOffers> {
                   imagePath: 'lib/assets/images/helpdesk.png',
                   name: 'Helpdesk',
                   subText: 'Complaints & Suggestions',
+                  routePath: '/noticeboard',
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 // Add more BannerWidgets with different parameters
@@ -68,6 +76,13 @@ class _SpecialOffersState extends State<SpecialOffers> {
                   imagePath: 'lib/assets/images/social.png',
                   name: 'Social',
                   subText: 'Connect and socialize',
+                  routePath: '/noticeboard',
+                ),
+                BannerWidget(
+                  imagePath: 'lib/assets/images/feedback.png',
+                  name: 'Feedback',
+                  subText: 'Surveys & Polls',
+                  routePath: '/feedback',
                 ),
               ],
             ),
@@ -85,12 +100,15 @@ class BannerWidget extends StatelessWidget {
   final String imagePath;
   final String name;
   final String subText;
+  final String routePath;
+
 
   const BannerWidget({
     Key? key,
     required this.imagePath,
     required this.name,
     required this.subText,
+    required this.routePath,
   }) : super(key: key);
 
   @override
@@ -116,7 +134,7 @@ class BannerWidget extends StatelessWidget {
             child: InkWell(
               highlightColor: Colors.white.withAlpha(50),
               onTap: () {
-                // Handle onTap
+                Navigator.pushNamed(context, routePath);
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -130,7 +148,7 @@ class BannerWidget extends StatelessWidget {
                       imagePath,
                       fit: BoxFit.fitWidth,
                       width: MediaQuery.of(context).size.width * 0.5,
-                      height: MediaQuery.of(context).size.height * 0.17,
+                      height: MediaQuery.of(context).size.height * 0.19,
                     ),
                   ),
                   Padding(

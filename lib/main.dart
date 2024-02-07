@@ -16,6 +16,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:project/ui/profile_page.dart';
 import 'package:project/ui/settings_page.dart';
 import 'package:provider/provider.dart';
+import 'components/feedback_banner.dart';
 import 'firebase_options.dart';
 import 'ui/login_page.dart';
 
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
         '/community': (context) =>  Dashboard(),
         '/generateQR': (context) =>  GenerateGatepass(),
         '/amenities': (context) =>  Reservation(),
+        '/feedback': (context) =>  FeedbackBanner(),
 
       }
     );
