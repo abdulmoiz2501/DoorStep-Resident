@@ -70,7 +70,7 @@ class SectionTitle extends StatelessWidget {
             );
           },
           style: TextButton.styleFrom(foregroundColor: Colors.grey),
-          child: const Text("See more"),
+          child: const Text(""),
         ),
       ],
     );

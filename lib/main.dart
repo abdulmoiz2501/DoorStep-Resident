@@ -6,6 +6,7 @@ import 'package:project/ui/auth/auth_page.dart';
 import 'package:project/ui/auth/change_password.dart';
 import 'package:project/ui/feedback/add_polls.dart';
 import 'package:project/ui/feedback/polls.dart';
+import 'package:project/ui/noticeboard/announcements.dart';
 import 'package:project/ui/profile/edit_profile_page.dart';
 import 'package:project/ui/profile/filling_profile_details.dart';
 import 'package:project/ui/gatepass/generate_qr.dart';
@@ -75,6 +76,7 @@ class MyApp extends StatelessWidget {
           '/addPoll': (context) =>  AddPollPage(),
           '/addSurvey': (context) =>  AddSurveysPage(),
           '/survey': (context) =>  SurveyPage(),
+          '/noticeboard': (context) =>  Announcement(),
 
         }
       ),
