@@ -61,6 +61,8 @@ dependencies:
   better_polls: ^1.0.8
   firebase_dynamic_links: ^5.4.13
   flutter_survey: ^0.1.4
+  url_launcher: ^6.2.4
+  flutter_rating_bar: ^4.0.1
 
 
 

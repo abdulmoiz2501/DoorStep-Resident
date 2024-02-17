@@ -15,12 +15,15 @@ import 'package:project/ui/auth/onboarding.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:project/ui/profile/profile_page.dart';
 import 'package:project/ui/reservations/amenities.dart';
+import 'package:project/ui/services/service_details_page.dart';
+import 'package:project/ui/services/services_selection_page.dart';
 import 'package:project/ui/settings/settings_page.dart';
 import 'package:project/ui/surveys/add_surveys.dart';
 import 'package:project/ui/surveys/survey.dart';
 import 'package:provider/provider.dart';
 import 'Providers/polls_fetch_provider.dart';
 import 'Providers/polls_provider.dart';
+import 'Providers/service_provider.dart';
 import 'components/feedback_banner.dart';
 import 'firebase_options.dart';
 import 'ui/auth/login_page.dart';
@@ -38,7 +41,7 @@ void main() async{
         ChangeNotifierProvider(create: (context) => FetchPollsProvider()),
         ChangeNotifierProvider(create: (context) => SurveyProvider()),
         ChangeNotifierProvider(create: (context) => FetchSurveysProvider()),
-
+        ChangeNotifierProvider(create: (context) => ServiceProviderProvider()),
         // Add this line
       ],
       child: MyApp(),
@@ -73,11 +76,16 @@ class MyApp extends StatelessWidget {
           '/amenities': (context) =>  Reservation(),
           '/feedback': (context) =>  FeedbackBanner(),
           '/polls': (context) =>  PollView(),
+
+          ///Admin side
           '/addPoll': (context) =>  AddPollPage(),
           '/addSurvey': (context) =>  AddSurveysPage(),
+          ///
+
           '/survey': (context) =>  SurveyPage(),
           '/noticeboard': (context) =>  Announcement(),
-
+          '/servicesSelection': (context) =>  ServicesSelectionPage(),
+          '/serviceDetails': (context) =>  Services(),
         }
       ),
     );

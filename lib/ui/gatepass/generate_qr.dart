@@ -103,7 +103,7 @@ class _HomePageState extends State<GenerateGatepass> {
                           text: "Share QR",
                           press: () {_takeScreenshot();},
                             key: ValueKey<String>('share_qr_button'),
-                          color: kAccentColor,
+                          color: kPrimaryColor,
                         ),
                       ],
                     ),

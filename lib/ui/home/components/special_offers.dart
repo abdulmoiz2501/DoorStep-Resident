@@ -12,7 +12,7 @@ class SpecialOffers extends StatefulWidget {
 
 class _SpecialOffersState extends State<SpecialOffers> {
 
-  List<Map<String, String>> banners = <Map<String, String>>  [
+  /*List<Map<String, String>> banners = <Map<String, String>>  [
     {
       'name': 'Noticeboard',
       'imagePath': 'lib/assets/images/noticeboard.png',
@@ -37,7 +37,7 @@ class _SpecialOffersState extends State<SpecialOffers> {
       'subText': 'Surveys & Polls',
       'routePath': '/noticeboard',
     },
-  ];
+  ];*/
   @override
   Widget build(BuildContext context) {
     final ScrollController _scrollController = ScrollController();
@@ -68,14 +68,14 @@ class _SpecialOffersState extends State<SpecialOffers> {
                   imagePath: 'lib/assets/images/helpdesk.png',
                   name: 'Helpdesk',
                   subText: 'Complaints & Suggestions',
-                  routePath: '/noticeboard',
+                  routePath: '/serviceDetails',
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 // Add more BannerWidgets with different parameters
                 BannerWidget(
-                  imagePath: 'lib/assets/images/social.png',
-                  name: 'Social',
-                  subText: 'Connect and socialize',
+                  imagePath: 'lib/assets/images/incidents.png',
+                  name: 'Incidents ',
+                  subText: 'Report and View Incidents',
                   routePath: '/noticeboard',
                 ),
                 BannerWidget(

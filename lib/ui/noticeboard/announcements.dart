@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../../constants/colors.dart';
+
 class Announcement extends StatefulWidget {
   @override
   _AnnouncementState createState() => _AnnouncementState();
@@ -24,10 +26,12 @@ class _AnnouncementState extends State<Announcement> {
               height: 20,
             ),
             Text(
-              'Announcement',
+              'Announcements & Notices',
               style: TextStyle(
                 fontFamily: 'Montserrat Medium',
                 fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: kTextColor,
               ),
             ),
             SizedBox(
