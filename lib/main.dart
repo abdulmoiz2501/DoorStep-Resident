@@ -6,6 +6,9 @@ import 'package:project/ui/auth/auth_page.dart';
 import 'package:project/ui/auth/change_password.dart';
 import 'package:project/ui/feedback/add_polls.dart';
 import 'package:project/ui/feedback/polls.dart';
+import 'package:project/ui/incident/report_incident.dart';
+import 'package:project/ui/incident/report_incident_2.dart';
+import 'package:project/ui/incident/report_incident_3.dart';
 import 'package:project/ui/noticeboard/announcements.dart';
 import 'package:project/ui/profile/edit_profile_page.dart';
 import 'package:project/ui/profile/filling_profile_details.dart';
@@ -86,6 +89,9 @@ class MyApp extends StatelessWidget {
           '/noticeboard': (context) =>  Announcement(),
           '/servicesSelection': (context) =>  ServicesSelectionPage(),
           '/serviceDetails': (context) =>  Services(),
+          '/reportIncident': (context) =>  ReportIncident(),
+          '/report_incident_2': (context) =>  ReportIncident2(),
+          '/report_incident_3': (context) =>  ReportIncident3(),
         }
       ),
     );

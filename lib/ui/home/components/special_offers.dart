@@ -76,7 +76,7 @@ class _SpecialOffersState extends State<SpecialOffers> {
                   imagePath: 'lib/assets/images/incidents.png',
                   name: 'Incidents ',
                   subText: 'Report and View Incidents',
-                  routePath: '/noticeboard',
+                  routePath: '/reportIncident',
                 ),
                 BannerWidget(
                   imagePath: 'lib/assets/images/feedback.png',

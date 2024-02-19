@@ -32,11 +32,11 @@ class ServicesSelectionPage extends StatelessWidget {
               ),
             ),
 
-            Image.asset(
+/*            Image.asset(
               'lib/assets/images/services.png',
               height: 120,
               width: 168,
-            ),
+            ),*/
             SizedBox(
               height: 5,
             ),
