@@ -25,7 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {});
   }
   void changePasswordPage() async {
-    await Navigator.pushNamed(context, '/changePassword');
+    await Navigator.pushNamed(context, '/resetPassword');
     setState(() {});
   }
 
@@ -35,7 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kScaffoldBackgroundColor,
+      //backgroundColor: kScaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
         title: Text('Profile page'),
@@ -56,107 +56,6 @@ class _ProfilePageState extends State<ProfilePage> {
         onLogoutTap: signUserOut,
       ),
 
-    // body: SafeArea(
-    //   top: true,
-    //   child: Column(
-    //     mainAxisSize: MainAxisSize.max,
-    //     crossAxisAlignment: CrossAxisAlignment.start,
-    //     children: [
-    //       Container(
-    //         height: 200,
-    //         child: Stack(
-    //           children: [
-    //             Container(
-    //               width: double.infinity,
-    //               height: 140,
-    //               decoration: BoxDecoration(
-    //                 color: kAccentColor,
-    //                 image: DecorationImage(
-    //                   fit: BoxFit.cover,
-    //                   image: Image.network(
-    //                     'https://images.unsplash.com/photo-1591197172062-c718f82aba20?w=1280&h=720',
-    //                   ).image,
-    //                 ),
-    //               ),
-    //             ),
-    //             Align(
-    //               alignment: AlignmentDirectional(-1, 1),
-    //               child: Padding(
-    //                 padding:
-    //                 EdgeInsetsDirectional.fromSTEB(24, 0, 0, 16),
-    //                 child: Container(
-    //                   width: 90,
-    //                   height: 90,
-    //                   decoration: BoxDecoration(
-    //                     color: kAccentColor,
-    //                     shape: BoxShape.circle,
-    //                     border: Border.all(
-    //                       color: kPrimaryColor,
-    //                       width: 2,
-    //                     ),
-    //                   ),
-    //                   child: CircleAvatar(
-    //                     radius:
-    //                     MediaQuery.of(context).size.height * 0.1,
-    //                     //backgroundImage: NetworkImage(profileLink),
-    //                   ),
-    //                 ),
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //       ),
-    //       Padding(
-    //         padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
-    //         child: Text(
-    //           'name',
-    //           // userData['name'],
-    //           style: TextStyle(
-    //             fontFamily: 'Circular',
-    //           ),
-    //         ),
-    //       ),
-    //       Padding(
-    //         padding: EdgeInsetsDirectional.fromSTEB(24, 4, 0, 16),
-    //         child: Text(
-    //           currentUser.email!,
-    //           style: TextStyle(
-    //             fontFamily: 'Circular',
-    //             fontSize: 15,
-    //           ),
-    //         ),
-    //       ),
-    //       Padding(
-    //         padding: EdgeInsetsDirectional.fromSTEB(24, 4, 0, 0),
-    //         child: Text(
-    //           'Your Account',
-    //           style: TextStyle(
-    //             fontFamily: 'Circular',
-    //             fontSize: 12,
-    //           ),
-    //         ),
-    //       ),
-    //       ProfilePageTab(
-    //         onTap: editProfilePage,
-    //         text: "Edit Profile",
-    //         leadingIcon: Icons.account_circle_outlined,
-    //         endingIcon: Icons.arrow_forward_ios,
-    //       ),
-    //       ProfilePageTab(
-    //         onTap: editProfilePage,
-    //         text: "Change Password",
-    //         leadingIcon: Icons.account_circle_outlined,
-    //         endingIcon: Icons.arrow_forward_ios,
-    //       ),
-    //       ProfilePageTab(
-    //         onTap: editProfilePage,
-    //         text: "Language",
-    //         leadingIcon: Icons.language_outlined,
-    //         endingIcon: Icons.arrow_forward_ios,
-    //       ),
-    //     ],
-    //   ),
-    // ),
 
       body: StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
@@ -189,9 +88,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       color: kAccentColor,
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: Image.network(
+                        image: /*Image.network(
                           'https://images.unsplash.com/photo-1591197172062-c718f82aba20?w=1280&h=720',
-                        ).image,
+                        ).image,*/
+                        AssetImage('lib/assets/images/Doorstep.png'),
                       ),
                     ),
                   ),
@@ -229,6 +129,7 @@ class _ProfilePageState extends State<ProfilePage> {
                // userData['name'],
                 style: TextStyle(
                   fontFamily: 'Circular',
+                  fontSize: 18,
                 ),
               ),
             ),

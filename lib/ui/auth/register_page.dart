@@ -162,7 +162,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kPrimaryLightColor,
+      //backgroundColor: kPrimaryLightColor,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -197,16 +197,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: MediaQuery.of(context).size.height * 0.03,
                   ),
 
-                  //username
-
-                  // MyTextField(
-                  //   controlller: emailController,
-                  //   hintText: 'Email',
-                  //   obscureText: false,
-                  //   emailValidate: true,
-                  //   passValidate: false,
-                  //   confirmPassValidate: false,
-                  // ),
                   Padding(
                     padding:  EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.065),
                     child: TextFormField(
@@ -248,15 +238,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: MediaQuery.of(context).size.height * 0.02,
                   ),
 
-                  //password
-                  // MyTextField(
-                  //   controlller: passwordController,
-                  //   hintText: 'Password',
-                  //   obscureText: true,
-                  //   emailValidate: false,
-                  //   passValidate: true,
-                  //   confirmPassValidate: false,
-                  // ),
                   Padding(
                     padding:  EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.065),
                     child: TextFormField(
@@ -293,16 +274,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: MediaQuery.of(context).size.height * 0.02,
                   ),
 
-                  //confirm pass
-                  // MyTextField(
-                  //   controlller: confirmPasswordController,
-                  //   hintText: 'Confirm Password',
-                  //   obscureText: true,
-                  //   emailValidate: false,
-                  //   passValidate: false,
-                  //   confirmPassValidate: true,
-                  //
-                  // ),
+
               Padding(
                 padding:  EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.065),
                 child: TextFormField(

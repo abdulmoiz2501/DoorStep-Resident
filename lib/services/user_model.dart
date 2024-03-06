@@ -5,9 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
+import '../components/custom_alert_dialogs.dart';
+
 final FirebaseStorage storage = FirebaseStorage.instance;
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-final CollectionReference userDetails = FirebaseFirestore.instance.collection('User Details');
+final CollectionReference userDetails = FirebaseFirestore.instance.collection('userProfile');
 String userUID = FirebaseAuth.instance.currentUser!.uid;
 final currentUser = FirebaseAuth.instance.currentUser!;
 
@@ -34,7 +36,12 @@ class StoreData{
   Future<String> saveUserProfileData ({
     required String name,
     required String phone,
+    required String cnic,
     required Uint8List file,
+    required String sector,
+    required String phase,
+    required String street,
+    required String houseNo,
   }) async {
     String resp = " Some Error Occurred";
     try{
@@ -46,6 +53,11 @@ class StoreData{
           'email': currentUser.email,
           'name': name,
           'phone': phone,
+          'cnic': cnic,
+          'sector': sector,
+          'phase': phase,
+          'street': street,
+          'houseNo': houseNo,
           'profileLink': imageUrl,
           'usertype' : 'resident',
         });
@@ -59,9 +71,12 @@ class StoreData{
     return resp;
   }
 
+
+
   Future<String> updateUserProfileData ({
     required String name,
     required String phone,
+    required String cnic,
     required Uint8List file,
   }) async {
     String resp = " Some Error Occurred";
@@ -74,6 +89,7 @@ class StoreData{
           'email': currentUser.email,
           'name': name,
           'phone': phone,
+          'cnic': cnic,
           'profileLink': imageUrl,
           'usertype' : 'resident',
         });

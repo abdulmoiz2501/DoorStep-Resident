@@ -114,7 +114,7 @@ class _ServicesState extends State<Services> {
                                           ),
                                           onTap: () {
                                             _service('tel:' +
-                                                doc['number']);
+                                                doc['number'].toString());
                                           },
                                         ),
                                       ],

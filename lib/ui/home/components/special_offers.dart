@@ -66,9 +66,9 @@ class _SpecialOffersState extends State<SpecialOffers> {
                 // Add more BannerWidgets with different parameters
                 BannerWidget(
                   imagePath: 'lib/assets/images/helpdesk.png',
-                  name: 'Helpdesk',
-                  subText: 'Complaints & Suggestions',
-                  routePath: '/serviceDetails',
+                  name: 'Chat',
+                  subText: 'Message and Chat with others',
+                  routePath: '/chat_page',
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 // Add more BannerWidgets with different parameters

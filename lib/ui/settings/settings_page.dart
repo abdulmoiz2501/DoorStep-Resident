@@ -23,6 +23,15 @@ class _SettingsPageState extends State<SettingsPage> {
     //setState(() {});
   }
 
+  void help() async {
+    await Navigator.pushNamed(context, '/helpAndSupport');
+    //setState(() {});
+  }
+  void terms() async {
+    await Navigator.pushNamed(context, '/terms');
+    //setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,26 +72,26 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                       ),
                     ),
-                    ProfilePageTab(
+                    /*ProfilePageTab(
                       onTap: editProfilePage,
                       text: "Dark Mode",
                       leadingIcon: Icons.dark_mode_outlined,
                       endingIcon: Icons.arrow_forward_ios,
-                    ),
-                    ProfilePageTab(
+                    ),*/
+                    /*ProfilePageTab(
                       onTap: editProfilePage,
                       text: "Notifcations ",
                       leadingIcon: Icons.notifications_outlined,
                       endingIcon: Icons.arrow_forward_ios,
-                    ),
+                    ),*/
                     ProfilePageTab(
-                      onTap: editProfilePage,
+                      onTap: help,
                       text: "Support",
                       leadingIcon: Icons.support_outlined,
                       endingIcon: Icons.arrow_forward_ios,
                     ),
                     ProfilePageTab(
-                      onTap: editProfilePage,
+                      onTap: terms,
                       text: "Terms of Service",
                       leadingIcon: Icons.description_outlined,
                       endingIcon: Icons.arrow_forward_ios,

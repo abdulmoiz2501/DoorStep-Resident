@@ -29,33 +29,6 @@ class _MyDrawerState extends State<MyDrawer> {
       child: Column(
         children: [
          SizedBox(height: 50,),
-          //header
-    //   DrawerHeader(
-    //   child: FutureBuilder<String>(
-    //     future: profileLinkFuture,
-    //     builder: (context, snapshot) {
-    //       if (snapshot.connectionState == ConnectionState.waiting) {
-    //         // Return a loading indicator or placeholder if fetching is still in progress
-    //         return CircularProgressIndicator();
-    //       } else if (snapshot.hasError) {
-    //         // Handle error if fetching fails
-    //         return Text('Error fetching profile link');
-    //       } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-    //         // Use the fetched profile link if available
-    //         return CircleAvatar(
-    //           radius: 50,
-    //           backgroundImage: NetworkImage(snapshot.data!),
-    //         );
-    //       } else {
-    //         // Fallback to a default avatar image if no profile link available
-    //         return CircleAvatar(
-    //           radius: 50,
-    //           backgroundImage: AssetImage('lib/assets/images/avatar.png'),
-    //         );
-    //       }
-    //     },
-    //   ),
-    // ),
 
          ///home list tile
           MyListTile(

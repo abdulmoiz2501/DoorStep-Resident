@@ -76,48 +76,50 @@ Widget customContainer({
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 5),
-            CircleAvatar(
-              radius: 20,
-              backgroundColor: Colors.grey.shade200.withOpacity(0.5),
-              backgroundImage: AssetImage(imagePath),
-            ),
-            SizedBox(height: 10),
-            Text(
-              text1,
-              style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
-            ),
-            Text(
-              text2,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            ),
-            SizedBox(height: 10),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(12),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 5),
+              CircleAvatar(
+                radius: 20,
+                backgroundColor: Colors.grey.shade200.withOpacity(0.5),
+                backgroundImage: AssetImage(imagePath),
               ),
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  top: 8.0,
-                  bottom: 8,
-                  left: 18,
-                  right: 18,
+              SizedBox(height: 10),
+              Text(
+                text1,
+                style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
+              ),
+              Text(
+                text2,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+              SizedBox(height: 10),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                child: Text(
-                  text3,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    top: 8.0,
+                    bottom: 8,
+                    left: 18,
+                    right: 18,
+                  ),
+                  child: Text(
+                    text3,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     ),

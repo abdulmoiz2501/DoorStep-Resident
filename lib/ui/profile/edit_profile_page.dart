@@ -1,5 +1,9 @@
 import 'dart:typed_data';
 
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -18,8 +22,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final formKey = GlobalKey<FormState>();
   final _fullNameController = TextEditingController();
   final _phoneController = TextEditingController();
-  final _emailController = TextEditingController();
-
+  final _cnicController = TextEditingController();
   Uint8List? _image;
 
   void selectImage() async {
@@ -32,26 +35,82 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   void saveProfile() async {
-    if (_image != null) {
+
+    if (_image != null &&
+        _fullNameController.text.isNotEmpty &&
+        _phoneController.text.isNotEmpty &&
+        _cnicController.text.isNotEmpty) {
+      showDialog(
+        context: context,
+        barrierDismissible: false, // Prevent dialog from closing on outside tap
+        builder: (context) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      );
       print('inside save profile');
       String resp = await StoreData().updateUserProfileData(
         name: _fullNameController.text,
         phone: _phoneController.text,
+        cnic: _cnicController.text,
         file: _image!,
-      );
+      ).whenComplete(() {
+        tokenSetNew(FirebaseAuth.instance.currentUser!.uid.toString());
+        Navigator.of(context).pop(); // Dismiss the dialog
+        final snackBar = SnackBar(
+          elevation: 0,
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.transparent,
+          content: AwesomeSnackbarContent(
+            title: 'Success!',
+            message: 'Details saved successfully!',
+            contentType: ContentType.success,
+          ),
+        );
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(snackBar);
+        Navigator.of(context).pop();
+        Navigator.pushNamedAndRemoveUntil(context, '/home',(route) => false);
+      });
     } else {
-      // Handle the case when _image is null
+      // Show snackbar to ensure user selects image and enters all details
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Please select an image and enter all details.',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
+  }
+
+  tokenSetNew(String userId) {
+    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+    _firebaseMessaging.subscribeToTopic('user');
+    _firebaseMessaging.getToken().then((value) {
+      CollectionReference users =
+      FirebaseFirestore.instance.collection('userProfile');
+
+      users
+          .doc(userId)
+          .update({'token': value.toString()})
+          .then((value) => print("User Updated"))
+          .catchError((error) => print("Failed to update user: $error"));
+    }).onError((error, stackTrace) {
+      print(error);
+      /// add snackbar
+      //CustomAlertDialogs.showFailuresDailog(context,error.toString());
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      backgroundColor: kScaffoldBackgroundColor,
       appBar: AppBar(
-        //leading: IconButton(onPressed: () => Get.back(), icon: const Icon(LineAwesomeIcons.angle_left)),
-        //title: Text(tEditProfile, style: Theme.of(context).textTheme.headline4),
         backgroundColor: kPrimaryColor,
       ),
       body: SingleChildScrollView(
@@ -59,18 +118,23 @@ class _EditProfilePageState extends State<EditProfilePage> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              // -- IMAGE with ICON
+              Text(
+                'Enter your details:',
+                style: TextStyle(
+                  fontFamily: 'Montserrat Medium',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: kTextColor,
+                ),
+              ),
               Stack(
                 children: [
-                  _image != null
-                      ? CircleAvatar(
+                  CircleAvatar(
                     radius: MediaQuery.of(context).size.height * 0.08,
-                    backgroundImage: MemoryImage(_image!),
-                  )
-                      : CircleAvatar(
-                    radius: MediaQuery.of(context).size.height * 0.1,
-                    backgroundImage:
-                    AssetImage('lib/assets/images/avatar.png'),
+                    backgroundImage: _image != null
+                        ? MemoryImage(_image!)
+                        : AssetImage('lib/assets/images/avatar.png') as ImageProvider<Object>?,
+
                   ),
                   Positioned(
                     child: IconButton(
@@ -83,83 +147,46 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ],
               ),
               SizedBox(height: 50),
-              // -- Form Fields
               Form(
+                key: formKey,
                 child: Column(
                   children: [
-                    SizedBox(height: 10),
-                    customTextField("Name", _fullNameController,prefixIcon: Icon(Icons.person)),
-                    SizedBox(height: 10),
-                    customTextField("Email", _emailController,prefixIcon: Icon(Icons.email)),
-                    SizedBox(height: 10),
-                    customTextField("Phone", _phoneController,prefixIcon: Icon(Icons.phone)),
-
-                    ///for password including an eye button for viewing pass
-                    // TextFormField(
-                    //   obscureText: true,
-                    //   decoration: InputDecoration(
-                    //     label: const Text('Password'),
-                    //     prefixIcon: const Icon(Icons.fingerprint),
-                    //     suffixIcon: IconButton(
-                    //         icon: const Icon(Icons.remove_red_eye),
-                    //         onPressed: () {}
-                    //     ),
-                    //       border: OutlineInputBorder(),
-                    //       prefixIconColor: kPrimaryColor,
-                    //       floatingLabelStyle: TextStyle(color: kPrimaryColor),
-                    //       focusedBorder: OutlineInputBorder(
-                    //         borderSide: BorderSide(width: 2,color: kPrimaryColor),
-                    //       ),
-                    //   ),
-                    // ),
-
-                    const SizedBox(height: 20),
-                    // -- Form Submit Button
+                    SizedBox(height: 30),
+                    customTextField(
+                      "Name",
+                      _fullNameController,
+                      prefixIcon: Icon(Icons.person),
+                    ),
+                    SizedBox(height: 30),
+                    customTextField(
+                      "Cnic",
+                      _cnicController,
+                      prefixIcon: Icon(Icons.document_scanner_rounded),
+                    ),
+                    SizedBox(height: 30),
+                    customTextField(
+                      "Phone",
+                      _phoneController,
+                      prefixIcon: Icon(Icons.phone),
+                    ),
+                    const SizedBox(height: 50),
                     SizedBox(
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height * 0.07,
                       child: ElevatedButton(
                         onPressed: saveProfile,
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: kPrimaryColor,
-                            side: BorderSide.none,
-                            shape: const StadiumBorder()),
-                        child: Text('Save',
-                            style: TextStyle(color: Colors.white)),
+                          backgroundColor: kPrimaryColor,
+                          side: BorderSide.none,
+                          shape: const StadiumBorder(),
+                        ),
+                        child: Text(
+                          'Save',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 10),
-
-                    // -- Created Date and Delete Button
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     const Text.rich(
-                    //       TextSpan(
-                    //         text: 'tJoined',
-                    //         style: TextStyle(fontSize: 12),
-                    //         children: [
-                    //           TextSpan(
-                    //               text: 'tJoinedAt',
-                    //               style: TextStyle(
-                    //                   fontWeight: FontWeight.bold,
-                    //                   fontSize: 12))
-                    //         ],
-                    //       ),
-                    //     ),
-                    //     ElevatedButton(
-                    //       onPressed: () {},
-                    //       style: ElevatedButton.styleFrom(
-                    //           backgroundColor:
-                    //               Colors.redAccent.withOpacity(0.1),
-                    //           elevation: 0,
-                    //           foregroundColor: Colors.red,
-                    //           shape: const StadiumBorder(),
-                    //           side: BorderSide.none),
-                    //       child: const Text('tDelete'),
-                    //     ),
-                    //   ],
-                    // )
                   ],
                 ),
               ),
@@ -170,36 +197,32 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  Widget customTextField(String title, var controller,
-      {bool obscure = false,Icon? prefixIcon,}) {
+  Widget customTextField(String title, TextEditingController controller,
+      {Icon? prefixIcon}) {
     return TextFormField(
-      //readOnly: readOnly,
-        obscureText: obscure,
-        controller: controller,
-        decoration: InputDecoration(
-          label: Text('$title',style: TextStyle(
-            fontFamily: 'Circular',
-            fontSize: 15,
-            fontWeight: FontWeight.w700,
-            color: kTextColor,
-          ),
-          ),
-          prefixIcon: prefixIcon,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          prefixIconColor: kPrimaryColor,
-          floatingLabelStyle: TextStyle(color: kPrimaryColor),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 2,color: kPrimaryColor),
-          ),
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: title,
+        labelStyle: TextStyle(
+          fontFamily: 'Circular',
+          fontSize: 15,
+          fontWeight: FontWeight.w700,
+          color: kTextColor,
         ),
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Field is Empty';
-          }
-          return null;
+        prefixIcon: prefixIcon,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 2, color: kPrimaryColor),
+        ),
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Field is Empty';
         }
+        return null;
+      },
     );
   }
 }

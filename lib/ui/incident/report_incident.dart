@@ -38,7 +38,8 @@ class ReportIncident extends StatelessWidget {
                                     onTap: () async {
                                       await showDialog(
                                         context: context,
-                                        builder: (ctx) => AlertDialog(
+                                        builder: (ctx) =>
+                                            AlertDialog(
                                           title: Column(
                                             children: [
                                               // closing buttons
@@ -78,7 +79,8 @@ class ReportIncident extends StatelessWidget {
                                                   decoration: BoxDecoration(
                                                     color: Colors.white,
                                                     border: Border.all(
-                                                        color: kPrimaryColor),
+                                                        //color: kPrimaryColor
+                                                        ),
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             4),
@@ -145,7 +147,7 @@ class ReportIncident extends StatelessWidget {
                                                     ),
                                                   ),
                                                 ),
-                                                Align(
+                                                /*Align(
                                                   child: SingleChildScrollView(
                                                     child: Container(
                                                       child: Text(
@@ -159,7 +161,7 @@ class ReportIncident extends StatelessWidget {
                                                   ),
                                                   alignment:
                                                   Alignment.centerLeft,
-                                                ),
+                                                ),*/
                                                 SizedBox(
                                                   height: 4,
                                                 ),
