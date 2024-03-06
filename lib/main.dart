@@ -27,6 +27,7 @@ import 'package:provider/provider.dart';
 import 'Providers/polls_fetch_provider.dart';
 import 'Providers/polls_provider.dart';
 import 'Providers/service_provider.dart';
+import 'chat/AllChat.dart';
 import 'components/feedback_banner.dart';
 import 'firebase_options.dart';
 import 'ui/auth/login_page.dart';
@@ -92,6 +93,8 @@ class MyApp extends StatelessWidget {
           '/reportIncident': (context) =>  ReportIncident(),
           '/report_incident_2': (context) =>  ReportIncident2(),
           '/report_incident_3': (context) =>  ReportIncident3(),
+
+          '/chat_page': (context) =>  MyChats(),
         }
       ),
     );

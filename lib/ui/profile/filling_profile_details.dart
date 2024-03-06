@@ -1,10 +1,12 @@
 import 'dart:typed_data';
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project/constants/colors.dart';
-
 import '../../components/progress_dialog.dart';
 import '../../constants/utils.dart';
 import '../../services/user_model.dart';
@@ -35,8 +37,37 @@ class _FillProfilePageState extends State<FillProfilePage> {
       name: _fullNameController.text,
       phone: _phoneController.text,
       file: _image!,
+    ).whenComplete(() {
+      tokenSetNew(FirebaseAuth.instance.currentUser!.uid.toString());
+    }
     );
   }
+  tokenSetNew(String userId){
+
+    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+    _firebaseMessaging.subscribeToTopic('user');
+    _firebaseMessaging.getToken().then((value) {
+
+      CollectionReference users = FirebaseFirestore.instance.collection('userProfile');
+
+      users
+          .doc(userId)
+          .update({
+        'token': value.toString()
+      }).then((value) => print("User Updated"))
+          .catchError((error) => print("Failed to update user: $error"));
+
+
+    }).onError((error, stackTrace)
+    {
+      print(error);
+      /// add snackbar
+      //CustomAlertDialogs.showFailuresDailog(context,error.toString());
+
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

@@ -1,7 +1,9 @@
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:project/components/signInButton.dart';
 import 'package:project/components/square_tile.dart';
@@ -31,6 +33,44 @@ class _LoginPageState extends State<LoginPage> {
 
     super.dispose();
   }
+
+  tokenUpdate(String userId){
+
+    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+    _firebaseMessaging.subscribeToTopic('user');
+    _firebaseMessaging.getToken().then((value) {
+
+      FirebaseFirestore.instance
+          .collection('userProfile')
+          .doc(userId)
+          .get()
+          .then((DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          print('Document data: ${documentSnapshot.get('token')}');
+
+          if(documentSnapshot.get('token').toString() != value.toString())
+          {
+            CollectionReference tokening = FirebaseFirestore.instance.collection('customer');
+
+            tokening
+                .doc(userId)
+                .update({
+              'token': value.toString()
+            }).then((value) => print("User Updated"))
+                .catchError((error) => print("Failed to update user: $error"));
+          }
+        } else {
+          print('Document does not exist on the database');
+        }
+      });
+
+
+    }).onError((error, stackTrace)
+    {
+
+      });
+    }
+
   void signUserIn() async{
 
     final isValid = formKey.currentState!.validate();
@@ -47,6 +87,7 @@ class _LoginPageState extends State<LoginPage> {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
+      tokenUpdate(FirebaseAuth.instance.currentUser!.uid.toString());
       // Task completed. Hide the progress dialog.
       ProgressDialogWidget.hide(context);
 

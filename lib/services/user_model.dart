@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
+import '../components/custom_alert_dialogs.dart';
+
 final FirebaseStorage storage = FirebaseStorage.instance;
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final CollectionReference userDetails = FirebaseFirestore.instance.collection('User Details');
@@ -58,6 +60,8 @@ class StoreData{
     }
     return resp;
   }
+
+
 
   Future<String> updateUserProfileData ({
     required String name,

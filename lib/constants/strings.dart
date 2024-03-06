@@ -1,0 +1,1 @@
+const serverToken = "AAAAn6yDwco:APA91bGWbQaNfGuFHiRPnBzOnt2fVEw-gz4jPNHeuMVh5J9OBZo7mfCXcNIjRzZnSgVx-2-V1VAiI1RFcxxNTF_a8E-FoooSazd0LUJ3TNG_FS5cYMwGy5plgP39L-P1Rph5OHhNE3ov";
