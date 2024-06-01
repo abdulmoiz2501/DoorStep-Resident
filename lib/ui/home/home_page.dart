@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project/constants/colors.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import '../../chat/Chat.dart';
 import '../../components/drawer.dart';
 import '../../services/signout_user.dart';
 import 'components/banner.dart';
@@ -37,10 +38,18 @@ class HomePage extends StatelessWidget {
           Navigator.pop(context);
           Navigator.pushNamed(context, '/profile');
         },
+        onComplaintsTap: () {
+          Navigator.pop(context);
+          Navigator.pushNamed(context, '/complaints_status');
+        },
         onSettingTap: () {
           Navigator.pop(context);
           Navigator.pushNamed(context, '/settings');
         },
+        onAdminChatTap: () {
+            Navigator.push(context,new MaterialPageRoute(builder: (context) => Chat( peerId: 'CJj1lkcicIXJ2WKIx71fM9nRiJU2'.toString(),type: 'resident',)));
+          },
+
         onLogoutTap: signUserOut,
       ),
 

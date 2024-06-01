@@ -223,8 +223,7 @@ class _MakeReservationState extends State<MakeReservation> {
                     ElevatedButton(
                       onPressed: () => _selectDate(context), // Your onPressed callback
                       style: ElevatedButton.styleFrom(
-                        primary: kAccentColor, // Set the button color
-                        onPrimary: Colors.white, // Set the text color
+                        foregroundColor: Colors.white, backgroundColor: kAccentColor, // Set the text color
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                           side: BorderSide(color: Colors.black),
@@ -367,7 +366,7 @@ class _MakeReservationState extends State<MakeReservation> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: kAccentColor, // Set the background color here
+                      backgroundColor: kAccentColor, // Set the background color here
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                         side: BorderSide(color: Colors.black),

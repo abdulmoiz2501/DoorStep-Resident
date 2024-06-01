@@ -12,9 +12,11 @@ class MyDrawer extends StatefulWidget {
   final void Function()? onHomeTap;
   final void Function()? onProfileTap;
   final void Function()? onSettingTap;
+  final void Function()? onComplaintsTap;
   final void Function()? onLogoutTap;
+  final void Function()? onAdminChatTap;
 
-  const MyDrawer({Key? key, required this.onProfileTap, required this.onSettingTap, required this.onLogoutTap, required this.onHomeTap}) : super(key: key);
+  const MyDrawer({Key? key, required this.onProfileTap, required this.onSettingTap, required this.onLogoutTap, required this.onHomeTap, this.onComplaintsTap, this.onAdminChatTap}) : super(key: key);
 
   @override
   State<MyDrawer> createState() => _MyDrawerState();
@@ -42,6 +44,11 @@ class _MyDrawerState extends State<MyDrawer> {
               text: 'P R O F I L E' ,
               onTap: widget.onProfileTap
           ),
+          MyListTile(
+            icon: Icons.settings,
+            text: 'C O M P L A I N T S' ,
+            onTap: widget.onComplaintsTap,
+          ),
 
           ///settings list tile
           MyListTile(
@@ -49,6 +56,12 @@ class _MyDrawerState extends State<MyDrawer> {
               text: 'S E T T I N G S' ,
               onTap: widget.onSettingTap,
           ),
+          MyListTile(
+            icon: Icons.chat_outlined,
+            text: 'A D M I N  C H A T',
+            onTap: widget.onAdminChatTap,
+          ),
+
 
           ///logout list tile
           MyListTile(

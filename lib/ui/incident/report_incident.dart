@@ -4,7 +4,7 @@ import 'package:flutter_swipe_button/flutter_swipe_button.dart';
 import 'package:project/constants/colors.dart';
 
 class ReportIncident extends StatelessWidget {
-  const ReportIncident({super.key});
+  const ReportIncident({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,300 +17,178 @@ class ReportIncident extends StatelessWidget {
         children: [
           Expanded(
             child: FutureBuilder<QuerySnapshot>(
-              future: FirebaseFirestore.instance.collection('incidents').get(),
+              future: FirebaseFirestore.instance
+                  .collection('incidents')
+                  .orderBy('timestamp', descending: true)
+                  .get(),
               builder: (context, snapshot) {
-                if (snapshot.hasData) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: kPrimaryColor,
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text(
+                      'Error: ${snapshot.error}',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  );
+                } else {
                   final List<DocumentSnapshot> documents = snapshot.data!.docs;
-                  if (snapshot.data != null) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListView(
-                        children: documents
-                            .map(
-                              (doc) => Card(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: Colors.white,
-                                    border: Border.all(color: kPrimaryColor),
-                                  ),
-                                  child: GestureDetector(
-                                    onTap: () async {
-                                      await showDialog(
-                                        context: context,
-                                        builder: (ctx) =>
-                                            AlertDialog(
-                                          title: Column(
-                                            children: [
-                                              // closing buttons
-                                              Align(
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    Navigator.of(ctx).pop();
-                                                  },
-                                                  child: Icon(
-                                                    Icons.close,
-                                                    color: kPrimaryColor,
-                                                  ),
-                                                ),
-                                                alignment:
-                                                    Alignment.centerRight,
-                                              ),
-
-                                              // Title text
-                                              Align(
-                                                child: Container(
-                                                  child: Text(
-                                                    "Title",
-                                                    style: TextStyle(
-                                                      color:
-                                                          Colors.grey.shade700,
-                                                    ),
-                                                  ),
-                                                ),
-                                                alignment: Alignment.centerLeft,
-                                              ),
-
-                                              SizedBox(
-                                                height: 4,
-                                              ),
-                                              Align(
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    border: Border.all(
-                                                        //color: kPrimaryColor
-                                                        ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            4),
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Text(
-                                                      doc["title"],
-                                                      style: TextStyle(
-                                                        color: Colors.black54,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                alignment: Alignment.centerLeft,
-                                              ),
-                                            ],
-                                          ),
-                                          content: Container(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                3,
+                  if (documents.isEmpty) {
+                    return Center(
+                      child: Text(
+                        'No data available',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    );
+                  }
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListView(
+                      children: documents.map((doc) {
+                        return Card(
+                          margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            side: BorderSide(color: kPrimaryColor, width: 1),
+                          ),
+                          elevation: 5,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  if (doc['image'] != null) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Dialog(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(15),
+                                            ),
                                             child: Column(
+                                              mainAxisSize: MainAxisSize.min,
                                               children: [
-                                                Align(
-                                                  child: SingleChildScrollView(
-                                                    child: Container(
-                                                      child: Text(
-                                                        "Description",
-                                                        style: TextStyle(
-                                                          color: Colors
-                                                              .grey.shade700,
+                                                Stack(
+                                                  children: [
+                                                    ClipRRect(
+                                                      borderRadius: BorderRadius.circular(15),
+                                                      child: Image.network(
+                                                        doc['image'],
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                    Positioned(
+                                                      right: 8,
+                                                      top: 8,
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          Navigator.of(context).pop();
+                                                        },
+                                                        child: Icon(
+                                                          Icons.close,
+                                                          color: Colors.white,
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                ),
-                                                SizedBox(
-                                                  height: 4,
-                                                ),
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    border: Border.all(
-                                                        color: kPrimaryColor),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            4),
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Text(
-                                                      doc["description"],
-                                                      style: TextStyle(
-                                                        color: Colors.black54,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                /*Align(
-                                                  child: SingleChildScrollView(
-                                                    child: Container(
-                                                      child: Text(
-                                                        "Description",
-                                                        style: TextStyle(
-                                                          color: Colors
-                                                              .grey.shade700,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  alignment:
-                                                  Alignment.centerLeft,
-                                                ),*/
-                                                SizedBox(
-                                                  height: 4,
-                                                ),
-                                                Container(
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border.all(
-                                                          color: kPrimaryColor),
-                                                      borderRadius:
-                                                      BorderRadius.circular(
-                                                          4),
-                                                    ),
-                                                    child: Padding(
-                                                      padding:
-                                                      const EdgeInsets.all(
-                                                          8.0),
-                                                      child: Text(
-                                                        doc["description"],
-                                                        style: TextStyle(
-                                                          color: Colors.black54,
-                                                        ),
-                                                      ),
-                                                    ),
+                                                  ],
                                                 ),
                                               ],
                                             ),
                                           ),
+                                        );
+                                      },
+                                    );
+                                  }
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(15),
+                                    topRight: Radius.circular(15),
+                                  ),
+                                  child: doc['image'] == null
+                                      ? Container(
+                                    height: 150,
+                                    color: Colors.black87,
+                                    child: Center(
+                                      child: Text(
+                                        "No Image",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 24,
                                         ),
-                                      );
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.black87,
-                                            border: Border.all(
-                                                color: kPrimaryColor),
-                                            borderRadius: BorderRadius.only(
-                                                topRight: Radius.circular(12.0),
-                                                topLeft: Radius.circular(12.0)),
-                                          ),
-                                          child: doc['image'] == null
-                                              ? Center(
-                                                  child: Text(
-                                                    "No Image",
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 24,
-                                                    ),
-                                                  ),
-                                                )
-                                              : Image.network(
-                                                  doc['image'],
-                                                  fit: BoxFit.cover,
-                                                  height: double.infinity,
-                                                  width: double.infinity,
-                                                  alignment: Alignment.center,
-                                                ),
-                                          height: 150,
-                                          width: double.infinity,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                doc['title'],
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  color: Colors.black87,
-                                                  // fontFamily: "Montserrat Medium",
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              )),
-                                        ),
-                                        Divider(
-                                          height: 2,
-                                          thickness: 1,
-                                          indent: 5,
-                                          endIndent: 5,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(6.0),
-                                              child: Align(
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  child: Text(
-                                                    "Description",
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.black54,
-                                                      // fontFamily: "Montserrat Medium",
-                                                    ),
-                                                  )),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(6.0),
-                                              child: Container(
-                                                  height: 20,
-                                                  width: 60,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    border: Border.all(
-                                                        color: kPrimaryColor),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            25),
-                                                  ),
-                                                  child: Center(
-                                                    child: Text(
-                                                      "Incident",
-                                                      style: TextStyle(
-                                                        color: kPrimaryColor,
-                                                      ),
-                                                    ),
-                                                  )),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                      ],
+                                      ),
                                     ),
+                                  )
+                                      : Image.network(
+                                    doc['image'],
+                                    height: 200,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
-                            )
-                            .toList(),
-                      ),
-                    );
-                  } else {
-                    return Text('no data');
-                  }
-                } else if (snapshot.hasError) {
-                  return Text(
-                    snapshot.error.toString(),
-                  );
-                } else {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      valueColor:
-                          new AlwaysStoppedAnimation<Color>(kPrimaryColor),
+                              Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      doc['title'],
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black87,
+                                      ),
+                                    ),
+                                    SizedBox(height: 10),
+                                    Text(
+                                      doc['description'],
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.black54,
+                                      ),
+                                    ),
+                                    SizedBox(height: 10),
+                                    Text(
+                                      "Reported on: ${doc['timestamp'].toDate()}",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    SizedBox(height: 10),
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                          vertical: 4,
+                                          horizontal: 12,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(color: kPrimaryColor),
+                                          borderRadius: BorderRadius.circular(25),
+                                        ),
+                                        child: Text(
+                                          "Incident",
+                                          style: TextStyle(
+                                            color: kPrimaryColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
                     ),
                   );
                 }

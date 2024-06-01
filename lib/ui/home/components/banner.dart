@@ -153,16 +153,29 @@ class _DiscountBannerState extends State<DiscountBanner> {
 
   Future<void> _sos() async {
     print("button of sos pressed");
-    FirebaseFirestore.instance.collection('userProfile').where('usertype',isEqualTo: 'guard')
+    FirebaseFirestore.instance.collection('userProfile').where('usertype',isEqualTo: 'admin')
         .get()
         .then((QuerySnapshot querySnapshot) {
-
+          print("admin"+querySnapshot.docs.length.toString());
           for(int i=0 ; i<querySnapshot.docs.length; i++){
-            print(querySnapshot.docs[i].get('name'));
+            //print("admin"+querySnapshot.docs[i].get('name'));
+            //print(querySnapshot.docs[i].get('email'));
+            print("admin"+querySnapshot.docs[i].get('token'));
             sendNotification(querySnapshot.docs[i].get('token'));
           }
 
+    });
+    FirebaseFirestore.instance.collection('userProfile').where('usertype',isEqualTo: 'guard')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      print("guard"+querySnapshot.docs.length.toString());
 
+          for(int i=0 ; i<querySnapshot.docs.length; i++){
+            print(querySnapshot.docs[i].get('name'));
+            print(querySnapshot.docs[i].get('email'));
+            print(querySnapshot.docs[i].get('token'));
+            sendNotification(querySnapshot.docs[i].get('token'));
+          }
 
     });
 

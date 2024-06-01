@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,13 +10,14 @@ import 'package:project/ui/incident/report_incident.dart';
 import 'package:geolocator/geolocator.dart';
 import '../../components/progress_dialog.dart';
 import '../../constants/utils.dart';
+import '../home/home_page.dart';
 
-class ReportIncident3 extends StatefulWidget {
+class Complaints extends StatefulWidget {
   @override
-  _ReportIncident3State createState() => _ReportIncident3State();
+  _ComplaintsState createState() => _ComplaintsState();
 }
 
-class _ReportIncident3State extends State<ReportIncident3> {
+class _ComplaintsState extends State<Complaints> {
   Uint8List? _image;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _title = TextEditingController();
@@ -27,12 +29,6 @@ class _ReportIncident3State extends State<ReportIncident3> {
   @override
   Widget build(BuildContext context) {
     // Step 1: Retrieve arguments using ModalRoute
-    Map<String, dynamic> arguments =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-
-    // Step 2: Access the severity and event from the arguments
-    String severity = arguments['severity'];
-    String event = arguments['event'];
     Size size = MediaQuery.of(context).size;
     return Form(
       key: _formKey,
@@ -82,8 +78,8 @@ class _ReportIncident3State extends State<ReportIncident3> {
                       maxLength: 25,
                       buildCounter: (BuildContext context,
                           {int? currentLength,
-                          int? maxLength,
-                          bool? isFocused}) {
+                            int? maxLength,
+                            bool? isFocused}) {
                         return null; // You can customize the counter if needed
                       },
                       controller: _title,
@@ -214,7 +210,7 @@ class _ReportIncident3State extends State<ReportIncident3> {
                     ),
                   ),
 
-                  Container(
+                  /*Container(
                     margin: EdgeInsets.only(
                       top: 0,
                       left: 2,
@@ -222,7 +218,7 @@ class _ReportIncident3State extends State<ReportIncident3> {
                       bottom:9,
                     ),
                     //padding: EdgeInsets.all(8),
-                      width: size.width * 0.25,
+                    width: size.width * 0.25,
                     child: ElevatedButton(
                       onPressed: () {
                         _showLocationOptions();
@@ -246,7 +242,7 @@ class _ReportIncident3State extends State<ReportIncident3> {
                         ),
                       ),
                     ),
-                  ),
+                  ),*/
                 ],
               ),
 
@@ -277,19 +273,18 @@ class _ReportIncident3State extends State<ReportIncident3> {
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       if(_image == null && _title == null && _description == null)
-                        {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Please enter a title, desciption and image.'),
-                              backgroundColor: Colors.red,
-                            ),
-                          );
-                        }
+                      {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Please enter a title, desciption and image.'),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      }
                       else {
-                        await getCurrentLocation();
-                        addIncident(
-                            _title.text, _description.text, _image!,
-                            double.parse(lat), double.parse(long));
+                        //await getCurrentLocation();
+                        addComplaint(
+                            _title.text, _description.text, _image!);
                       }
                     }
                   },
@@ -302,7 +297,7 @@ class _ReportIncident3State extends State<ReportIncident3> {
                         color: kAccentColor4), // Add this line for border
                   ),
                   child: Text(
-                    'Report',
+                    'Register complaint',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 20,
@@ -349,7 +344,7 @@ class _ReportIncident3State extends State<ReportIncident3> {
     );
   }
 
-  _showLocationOptions() {
+  /*_showLocationOptions() {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -357,7 +352,7 @@ class _ReportIncident3State extends State<ReportIncident3> {
           height: 150,
           child: Column(
             children: [
-              ListTile(
+              *//*ListTile(
                 leading: Icon(Icons.location_on),
                 title: Text('Current Location'),
                 onTap: () {
@@ -367,10 +362,10 @@ class _ReportIncident3State extends State<ReportIncident3> {
                     long = '${value.longitude}';
                   }) ;// Call the function to upload from gallery
                 },
-              ),
+              ),*//*
 
               ///TODO: Add the option to select location on mapk
-              /*ListTile(
+              *//*ListTile(
                 leading: Icon(Icons.add_location_alt),
                 title: Text('Select Location on Map'),
                 onTap: () {
@@ -378,15 +373,15 @@ class _ReportIncident3State extends State<ReportIncident3> {
                   // Uncomment the line below if you want to enable taking a picture from the camera
                   getFromCamera();
                 },
-              ),*/
+              ),*//*
             ],
           ),
         );
       },
     );
-  }
+  }*/
 
-  Future<Position> getCurrentLocation() async {
+/*  Future<Position> getCurrentLocation() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       return Future.error('Location services are disabled.');
@@ -408,7 +403,7 @@ class _ReportIncident3State extends State<ReportIncident3> {
     });
 
     return await Geolocator.getCurrentPosition();
-  }
+  }*/
 
   /// Get from gallery
   getFromGallery() async {
@@ -435,37 +430,30 @@ class _ReportIncident3State extends State<ReportIncident3> {
     }
   }
 
-
-
-  Future<void> addIncident(String title, String description, Uint8List? image, double latitude, double longitude) async {
-    final CollectionReference incident = FirebaseFirestore.instance.collection('incidents');
-
-    // Show the ProgressDialog
+  Future<void> addComplaint(String title, String description, Uint8List? image) async {
+    final CollectionReference incident =
+    FirebaseFirestore.instance.collection('complaints');
+    final String? uid = FirebaseAuth.instance.currentUser?.uid;
     ProgressDialogWidget.show(context, "Please wait...");
+
+// Show the ProgressDialog
 
     FirebaseStorage storage = FirebaseStorage.instance;
     String url;
-    DateTime timestamp = DateTime.now(); // Adding a timestamp
-
     if (image == null) {
       await incident.doc().set({
         "title": title,
         "description": description,
         "image": null,
-        "latitude": latitude,
-        "longitude": longitude,
-        "timestamp": timestamp, // Adding timestamp field
-      }).whenComplete(() {
-        ProgressDialogWidget.hide(context);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Incident reported successfully')),
-        );
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => ReportIncident()),
-        );
-      });
-    } else {
+        "uid": uid,
+        "resolved": false,
+      }).whenComplete(() => ProgressDialogWidget.hide(context));
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Complaint registered successfully'))
+      );
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => ReportIncident()));
+    } else if (image != null) {
       Reference ref = storage.ref().child("image" + DateTime.now().toString());
       UploadTask uploadTask = ref.putData(image);
       uploadTask.whenComplete(() async {
@@ -476,27 +464,20 @@ class _ReportIncident3State extends State<ReportIncident3> {
             "title": title,
             "description": description,
             "image": url,
-            "latitude": latitude,
-            "longitude": longitude,
-            "timestamp": timestamp, // Adding timestamp field
-          }).whenComplete(() {
-            ProgressDialogWidget.hide(context);
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Incident reported successfully')),
-            );
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => ReportIncident()),
-            );
+            "uid": uid,
+            "resolved": false,
           });
         }
       }).catchError((onError) {
         print(onError);
-        ProgressDialogWidget.hide(context);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error reporting incident')),
-        );
-      });
+      }).whenComplete(() => ProgressDialogWidget.hide(context));
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Complaint registered successfully'))
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
     }
   }
 } // last

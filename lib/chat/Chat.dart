@@ -108,7 +108,7 @@ class _ChatState extends State<Chat> {
         }
       });
     }
-    if (widget.type == "customer")
+    if (widget.type == "resident")
     {
       peerName = "Admin";
     }
@@ -337,10 +337,10 @@ class ChatScreenState extends State<ChatScreen> {
           }
         });
       }
-    else if (widget.type == "customer")
+    else if (widget.type == "resident")
       {
         setState(() {
-          peerAvatar = "assets/images/logo.png";
+          peerAvatar = "lib/assets/images/adminlogo.png";
         });
       }
 
@@ -1479,7 +1479,7 @@ class ChatScreenState extends State<ChatScreen> {
                           onPressed: () => Navigator.of(context).pop(false),
                           child: Text('No'),
                           style: ElevatedButton.styleFrom(
-                            primary: kPrimaryColor, // Change the background color here
+                            backgroundColor: kPrimaryColor, // Change the background color here
                           ),
                         ),
                         ElevatedButton(
@@ -1490,7 +1490,7 @@ class ChatScreenState extends State<ChatScreen> {
                           },
                           child: Text('Yes'),
                           style: ElevatedButton.styleFrom(
-                            primary: kPrimaryColor, // Change the background color here
+                            backgroundColor: kPrimaryColor, // Change the background color here
                           ),
                         ),
                       ],

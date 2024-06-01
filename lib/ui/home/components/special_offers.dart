@@ -84,6 +84,12 @@ class _SpecialOffersState extends State<SpecialOffers> {
                   subText: 'Surveys & Polls',
                   routePath: '/feedback',
                 ),
+                BannerWidget(
+                  imagePath: 'lib/assets/images/feedback.png',
+                  name: 'Complaints',
+                  subText: 'Complaints & Status',
+                  routePath: '/complaints',
+                ),
               ],
             ),
           ),

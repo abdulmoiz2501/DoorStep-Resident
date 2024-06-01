@@ -165,12 +165,12 @@ class _ProfilePageState extends State<ProfilePage> {
               leadingIcon: Icons.account_circle_outlined,
               endingIcon: Icons.arrow_forward_ios,
             ),
-            ProfilePageTab(
+/*            ProfilePageTab(
               onTap: editProfilePage,
               text: "Language",
               leadingIcon: Icons.language_outlined,
               endingIcon: Icons.arrow_forward_ios,
-            ),
+            ),*/
           ],
         ),
     );

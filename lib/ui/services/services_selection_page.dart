@@ -13,10 +13,10 @@ class ServicesSelectionPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(),
-      body: new Container(
+      body: Container(
         alignment: Alignment.topCenter,
         color: Colors.white,
-        child: new Column(
+        child: Column(
           children: [
             SizedBox(
               height: 5,
@@ -68,10 +68,10 @@ class ServicesSelectionPage extends StatelessWidget {
                     SizedBox(
                       width: 80,
                     ),
-                    Icon(
+                    /*Icon(
                       Icons.home_repair_service,
                       color: Colors.white,
-                    ),
+                    ),*/
                   ],
                 ),
               ),

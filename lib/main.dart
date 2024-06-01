@@ -6,6 +6,8 @@ import 'package:project/services/login_or_register.dart';
 import 'package:project/services/provider.dart';
 import 'package:project/ui/auth/auth_page.dart';
 import 'package:project/ui/auth/change_password.dart';
+import 'package:project/ui/complaints/complaints.dart';
+import 'package:project/ui/complaints/complaints_statu.dart';
 import 'package:project/ui/feedback/add_polls.dart';
 import 'package:project/ui/feedback/polls.dart';
 import 'package:project/ui/incident/report_incident.dart';
@@ -19,6 +21,7 @@ import 'package:project/ui/gatepass/generate_qr.dart';
 import 'package:project/ui/home/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:project/ui/profile/profile_page.dart';
+import 'package:project/ui/reservations/hall_booking/home_screen.dart';
 import 'package:project/ui/reservations/movie_booking/presentation/movie_booking_screen.dart';
 import 'package:project/ui/reservations/reservation_selection_page.dart';
 import 'package:project/ui/services/service_details_page.dart';
@@ -85,6 +88,7 @@ class MyApp extends StatelessWidget {
 
           //'/amenities': (context) =>  Reservation(),
           '/movie_booking': (context) =>  MovieBookingScreen(),
+          '/hall_booking': (context) =>  HomeScreen(),
           '/amenities': (context) =>  ReservationSelectionPage(),
 
           '/feedback': (context) =>  FeedbackBanner(),
@@ -108,6 +112,8 @@ class MyApp extends StatelessWidget {
           '/helpAndSupport': (context) =>  HelpCentre(),
           '/terms': (context) => TermsOfService(),
           '/resetPassword': (context) => ForgotPasswordPage(),
+          '/complaints': (context) =>  Complaints(),
+          '/complaints_status': (context) =>  UserComplaintsPage (),
         }
       ),
     );

@@ -37,7 +37,7 @@ class ReservationSelectionPage extends StatelessWidget {
               icon: Icons.star,
               iconColor: kPrimaryColor,
               onTap: () {
-                // Navigate to marquee reservation page
+                Navigator.pushNamed(context, '/hall_booking');
               },
             ),
           ],
